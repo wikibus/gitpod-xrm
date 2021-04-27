@@ -1,0 +1,11 @@
+image:
+  file: .gitpod.dockerfile
+
+vscode:
+  extensions:
+    - zazuko-gmbh.expressive-rdf-mapper
+
+tasks:
+  - init: cd ontop-scripts
+    command:  ./install.sh
+  - command: mysql < example-database.sql
