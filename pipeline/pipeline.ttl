@@ -1,0 +1,100 @@
+@base <http://data.example.com/pipeline/> .
+@prefix code: <https://code.described.at/> .
+@prefix p: <https://pipeline.described.at/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<variables>
+  p:variable [ a p:Variable;
+    p:name "inputFile";
+    p:value "../ontop-scripts/triples.nt"
+  ], [ a p:Variable;
+    p:name "outputFile";
+    p:value "../ontop-scripts/triples-slug.nt"
+  ] .
+
+<FilePipeline> a p:Pipeline;
+  p:variables <variables>;
+  p:steps [
+    p:stepList ( <readFile> <parse> <slugUris> <serialize> <writeFile> )
+  ].
+
+<readFile> a p:Step;
+  code:implementedBy [ a code:EcmaScript;
+    code:link <node:fs#createReadStream>
+  ];
+  code:arguments ("inputFile"^^p:VariableName).
+
+<parse> a p:Step ;
+  code:implementedBy [
+    code:link <node:barnard59-formats/n3.js#parse> ;
+    a code:EcmaScript
+] .
+
+<serialize> a p:Step;
+  code:implementedBy [ a code:EcmaScript;
+    code:link <node:barnard59-formats#ntriples.serialize>
+  ].
+
+<writeFile> a p:Step;
+  code:implementedBy [ a code:EcmaScript;
+    code:link <node:fs#createWriteStream>
+  ];
+  code:arguments ("outputFile"^^p:VariableName).
+
+<slugUris> a p:Step ;
+  code:implementedBy [
+    code:link <node:barnard59-base#map> ;
+    a code:EcmaScript
+  ];
+  code:arguments ( """quad => {
+  const { URL } = require('url');
+  const urlSlug = require('url-slug');
+  const rdf = require('rdf-ext');
+  const decode = require('safe-decode-uri-component');
+
+  if (quad.predicate.value === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type') {
+    return rdf.quad(fixNamedNode(quad.subject), quad.predicate, quad.object, quad.graph)
+  }
+  return rdf.quad(fixNamedNode(quad.subject), quad.predicate, fixNamedNode(quad.object), quad.graph)
+
+  function fixNamedNode (term) {
+    if (term.termType !== 'NamedNode') {
+      return term;
+    }
+
+    if (!term.value.startsWith('http://data.example.com/')) {
+      return term;
+    }
+
+    const url = new URL(term.value);
+
+    url.pathname = url.pathname
+      .split('/')
+      .map((part, index, all) => {
+        if (index === all.length - 1) {
+          try {
+            decodeURIComponent(part)
+          } catch (err) {
+            console.warn(`Failed to properly decode \"${part}\", fallback to \"${decode(part)}\"`)
+          }
+          return urlSlug(decode(part));
+        }
+        return part;
+      })
+      .join('/');
+
+    if (term.value.startsWith('http://data.example.com/party/')) {
+      url.pathname = url.pathname
+        .split('/')
+        .map((part, index, all) => {
+          if (index === all.length - 1) {
+            return part.toUpperCase();
+          }
+          return part;
+        })
+        .join('/');
+    }
+
+    return rdf.namedNode(url.toString());
+  };
+}"""^^code:EcmaScript) .

@@ -1,10 +1,10 @@
-.PHONY: sql convert
+.PHONY: sql convert install_ontop pipeline
 
-all: sql convert
-
-sql:
-	cd database && docker-compose down
-	cd database && docker-compose up -d db && sleep 20
+install_ontop:
+	cd ontop-scripts && ./install.sh
 
 convert:
 	cd ontop-scripts && ./convert.sh
+
+pipeline:
+	cd pipeline && npm run pipeline-file

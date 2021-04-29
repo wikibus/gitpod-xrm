@@ -6,6 +6,8 @@ vscode:
     - zazuko-gmbh.expressive-rdf-mapper
 
 tasks:
-  - init: cd ontop-scripts
-    command:  ./install.sh
   - command: mysql < example-database.sql
+  - init: cd pipeline
+    command: npm ci
+  - command: make install_ontop
+  - command: make sql
