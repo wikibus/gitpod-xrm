@@ -23,4 +23,4 @@ tasks:
       npm ci
     command: |
       gp sync-await convert
-      make pipeline
+      npm run pipeline-file
