@@ -7,10 +7,12 @@ vscode:
 
 tasks:
   - name: mysql-data-load
+    before: gp await-port 3306
+    init: |      
+      mysql < example-database.sql      
     command: |
-      gp await-port 3306
-      mysql < example-database.sql
       gp sync-done mysql-data-load
+      mysql -e 'SHOW TABLES FROM exampledatabase'
   - name: convert
     init: make install_ontop
     command: |
@@ -18,9 +20,8 @@ tasks:
       make convert
       gp sync-done convert
   - name: pipeline
-    init: |
-      cd pipeline
-      npm ci
+    before: cd pipeline
+    init: npm ci
     command: |
       gp sync-await convert
       npm run pipeline-file
