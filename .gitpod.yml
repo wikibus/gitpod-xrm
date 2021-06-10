@@ -6,8 +6,21 @@ vscode:
     - zazuko-gmbh.expressive-rdf-mapper
 
 tasks:
-  - command: mysql < example-database.sql
-  - init: cd pipeline
-    command: npm ci
-  - command: make install_ontop
-  - command: make sql
+  - name: mysql-data-load
+    command: |
+      gp await-port 3306
+      mysql < example-database.sql
+      gp sync-done mysql-data-load
+  - name: convert
+    init: make install_ontop
+    command: |
+      gp sync-await mysql-data-load
+      make convert
+      gp sync-done convert
+  - name: pipeline
+    init: |
+      cd pipeline
+      npm ci
+    command: |
+      gp sync-await convert
+      make pipeline

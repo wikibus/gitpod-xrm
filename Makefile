@@ -1,4 +1,4 @@
-.PHONY: sql convert install_ontop pipeline
+.PHONY: install_ontop convert pipeline
 
 install_ontop:
 	cd ontop-scripts && ./install.sh
