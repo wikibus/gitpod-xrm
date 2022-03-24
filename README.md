@@ -1,5 +1,9 @@
 # Template for Mapping from MySQL to RDF Triples using XRM
 
+<a href="https://gitpod.io/from-referrer/" style="padding: 10px;">
+    <img src="https://gitpod.io/button/open-in-gitpod.svg" width="150" alt="Push" align="center">
+</a>
+
 Use this repo as template to set up a project-specific mapping project.
 
 This repository is structured as a full example showing how Zazuko [Expressive RDF Mapper (XRM)](https://zazuko.com/products/expressive-rdf-mapper/)
