@@ -4,7 +4,6 @@ image:
 vscode:
   extensions:
     - zazuko-gmbh.expressive-rdf-mapper
-    - Zazuko.vscode-rdf-sketch
 
 tasks:
   - name: mysql-data-load
