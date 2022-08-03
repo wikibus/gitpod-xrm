@@ -7,22 +7,6 @@ vscode:
     - https://Zazuko.gallery.vsassets.io/_apis/public/gallery/publisher/Zazuko/extension/vscode-rdf-sketch/0.0.8/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage
 
 tasks:
-  - name: mysql-data-load
-    before: gp await-port 3306
-    init: |
-      mysql < example-database.sql
-    command: |
-      gp sync-done mysql-data-load
-      mysql -e 'SHOW TABLES FROM exampledatabase'
   - name: convert
-    init: make install_ontop
-    command: |
-      gp sync-await mysql-data-load
-      make convert
-      gp sync-done convert
-  - name: pipeline
-    before: cd pipeline
-    init: npm ci
-    command: |
-      gp sync-await convert
-      npm run pipeline-file
+    init: dotnet tool install -g r2rml4net-cli; yarn
+    command: yarn transform
