@@ -2,26 +2,156 @@ language-tags {
 	en
 }
 
-vocabulary ex {
-	prefix "ex" "http://example.com/ns#"
+vocabulary wbo {
+	prefix "wbo" "https://wikibus.org/ontology#"
 
 	classes
-		Employee
-		Department
+		Brochure
+		Source
+		Book
+		WishlistItem
+		StorageLocation
+		StorageContainer
+		WishlistCollection
+		Wishlist
+		User
 
 	properties
 		name
-		department
+		^source
+		done
+		user
+		size
+}
+
+vocabulary wba {
+	prefix "wba" "https://wikibus.org/api#"
+
+	classes
+		WishlistCollection
+
+	properties
+		images
+		wishlistItem
+		driveImportFolder
+		issues
+		compartments
+}
+
+vocabulary opus {
+	prefix "opus" "http://lsdis.cs.uga.edu/projects/semdis/opus#"
+
+	properties
+		year
+		month
+}
+
+vocabulary bibo {
+	prefix "bibo" "http://purl.org/ontology/bibo/"
+
+	classes
+		Book
+
+	properties
+		pages
+}
+
+vocabulary xsd {
+	prefix "xsd" "http://www.w3.org/2001/XMLSchema#"
+
+	datatypes
+		int
+		gYear
+		gMonth
+		long
+		boolean
+}
+
+vocabulary dcterms {
+	prefix "dcterms" "http://purl.org/dc/terms/"
+
+	properties
+		identifier
+		date
+		language
+		title
+		description
+		created
+	 	modified
+}
+
+vocabulary dtype {
+	prefix "dtype" "http://www.linkedmodel.org/schema/dtype#"
+
+	properties
+		position
+		orderIndex
+}
+
+vocabulary rdfs {
+	prefix "rdfs" "http://www.w3.org/2000/01/rdf-schema#"
+
+	properties
+		label
 }
 
 vocabulary schema {
 	prefix "schema" "http://schema.org/"
 
 	classes
-		Place
+		MediaObject
+		ImageObject
+		Book
+		Periodical
 
 	properties
 		location
 		name
+		contributor
+		associatedMedia
+		image
+		primaryImageOfPage
+		encodingFormat
+		contentSize
+		contentUrl
+		thumbnail
+		owns
+		isbn
+		identifier
+		author
+		isPartOf
+		hasPart
+		issueNumber
+		containedInPlace
+
+	datatypes
+		URL
 }
 
+vocabulary hydra {
+	prefix "hydra" "http://www.w3.org/ns/hydra/core#"
+
+	classes
+		Resource
+		Collection
+
+	properties
+		property
+		object
+		^subject
+		manages
+}
+
+vocabulary rdf {
+	prefix "rdf" "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+
+	properties
+		^type
+}
+
+vocabulary dcat {
+	prefix "dcat" "http://www.w3.org/ns/dcat#"
+
+	properties
+		byteSize
+}

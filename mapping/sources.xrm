@@ -1,29 +1,209 @@
-source-group exampledatabase {
+source-group wikibus {
 	type rdb
 
-	logical-source employee {
-		source "EMP2"
+	logical-source sources {
+		source query "select s.Id,
+			FileCabinet,
+			FileOffset,
+			fc.Description as FileCabinetName
+		from Sources.Source s
+        join Priv.FileCabinet fc on fc.Id = s.FileCabinet"
 
 		referenceables
-			EMPNO
-			ENAME
-			JOB
+			Id
+			FileCabinet
+			FileOffset
+			FileCabinetName
 	}
 
-	logical-source department {
-		source "DEPT2"
+	logical-source brochures {
+		source query "select
+       Id,
+       Pages,
+       Year,
+       Month,
+       Day,
+       IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
+	   FileCabinet,
+	   FileOffset,
+       FolderCode,
+       FolderName,
+       rtrim([User]) as [User],
+       DateCreated,
+       DateUpdated,
+       ContentSize as ByteSize,
+	   concat(cast(round(cast(ContentSize as decimal) / 1024 /1024, 2) as decimal(4,2)), ' MB') as ContentSize,
+       ContentUrl,
+       IIF(rtrim(value) = '', NULL, value) as Language,
+	   IIF(Image is NULL, NULL, Id) as LegacyImage
+from Sources.Source
+CROSS APPLY STRING_SPLIT(Languages, ';')
+where SourceType = 'folder'"
 
 		referenceables
-			DEPTNO
-			DNAME
-			LOC
+			Id
+			Pages
+			Year
+			Month
+			Day
+			Notes
+			FileCabinet
+			FileOffset
+			FolderCode
+			FolderName
+			User
+			DateCreated
+			DateUpdated
+			ContentSize
+			ByteSize
+			ContentUrl
+			Language
+			LegacyImage
 	}
 
-	logical-source employee_department {
-		source "EMP2DEPT"
+	logical-source books {
+		source query "select
+    Id,
+    Pages,
+    Year,
+    IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
+    BookTitle,
+    BookISBN,
+    BookAuthor,
+    rtrim([User]) as [User],
+	DateCreated,
+    DateUpdated,
+    IIF(rtrim(value) = '', NULL, value) as Language,
+    IIF(Image is NULL, NULL, Id) as LegacyImage
+from Sources.Source
+         CROSS APPLY STRING_SPLIT(Languages, ';')
+where SourceType = 'book'"
 
 		referenceables
-			EMPNO
-			DEPTNO
+			Id
+			Pages
+			Year
+			Notes
+			BookTitle
+			BookISBN
+			BookAuthor
+			FolderName
+			User
+			Language
+			LegacyImage
+			DateCreated
+			DateUpdated
+	}
+
+	logical-source primaryImages {
+		source query "
+    SELECT i.SourceId,
+           i.ExternalId
+    FROM Sources.Images i
+	join Sources.Source b on i.SourceId = b.Id
+	WHERE i.OrderIndex = 1 and b.SourceType = 'folder'"
+
+		referenceables
+			SourceId
+			ExternalId
+	}
+
+	logical-source images {
+		source "[Sources].[Images]"
+
+		referenceables
+			SourceId
+			Id
+			OriginalUrl
+			ThumbnailUrl
+			ExternalId
+			OrderIndex
+	}
+
+	logical-source users {
+		source query "select rtrim([UserId]) as [UserId], DriveImportFolder from [Sources].[Users]"
+
+		referenceables
+			UserId
+			DriveImportFolder
+	}
+
+	logical-source magazines {
+		source query "select *,
+    lower(replace(
+        replace(
+            cast(Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
+        ' ', '-'),
+    '&', '-')) as Slug
+from Sources.Magazine"
+
+		referenceables
+			Id
+			Name
+			SubName
+			Slug
+	}
+
+	logical-source magazineIssues {
+		source query "select
+    s.Id,
+    s.Pages,
+    s.Year,
+    s.Month,
+    s.Day,
+    IIF(rtrim(Notes) = '', NULL, s.Notes) as Notes,
+    s.FileCabinet,
+    s.FileOffset,
+    s.MagIssueNumber,
+    rtrim(s.[User]) as [User],
+    DateCreated,
+    DateUpdated,
+    IIF(rtrim(value) = '', NULL, value) as Language,
+    IIF(s.Image is NULL, NULL, s.Id) as LegacyImage,
+    lower(replace(
+            replace(
+                    cast(m.Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
+                    ' ', '-'),
+            '&', '-')) as MagazineSlug
+from Sources.Source s
+         join Sources.Magazine m on m.Id = s.MagIssueMagazine
+         CROSS APPLY STRING_SPLIT(s.Languages, ';')
+where s.SourceType = 'magissue'"
+
+		referenceables
+			Id
+			Pages
+			Year
+			Month
+			Day
+			Notes
+			FileCabinet
+			FileOffset
+			MagazineSlug
+			MagIssueNumber
+			User
+			DateCreated
+			DateUpdated
+			Language
+			LegacyImage
+	}
+
+	logical-source wishlist {
+		source query "select Id, rtrim([User]) as [User], SourceId, Done from Sources.Wishlist"
+
+		referenceables
+			Id
+			User
+			SourceId
+			Done
+	}
+
+	logical-source cabinets {
+		source "[Priv].[FileCabinet]"
+
+		referenceables
+			Id
+			Description
+			CompartmentsCount
 	}
 }

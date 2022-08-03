@@ -1,0 +1,80 @@
+output r2rml
+
+template brochureImageId "brochure/{0}/image"
+
+map Brochure from wikibus.brochures {
+	subject template brochureId with Id;
+
+	types
+		wbo.Source
+		wbo.Brochure
+		hydra.Resource
+
+	properties
+		bibo.pages from Pages;
+		opus.year from Year with datatype xsd.gYear;
+		opus.month from Month with datatype xsd.gMonth;
+		dcterms.date template date with Year Month Day;
+		schema.containedInPlace template storageLocationId with FileCabinet FileOffset;
+		dcterms.language template languageId with Language;
+		dcterms.title from FolderName;
+		dcterms.description from Notes;
+		dcterms.identifier from FolderCode;
+		schema.contributor template userId with User;
+		schema.associatedMedia template brochurePdfId with Id;
+		schema.image template brochureImageId with LegacyImage;
+		schema.primaryImageOfPage template brochureImageId with LegacyImage;
+		dcterms.created from DateCreated;
+		dcterms.modified from DateUpdated;
+		wba.wishlistItem template "wishlist/{0}" with Id;
+		schema.identifier from Id;
+		wba.images template sourceImageCollection with Id;
+}
+
+map BrochureFile from wikibus.brochures {
+	subject template brochurePdfId with Id;
+
+	types
+		schema.MediaObject
+
+	properties
+		schema.contentSize from ContentSize;
+		dcat.byteSize from ByteSize with datatype xsd.long;
+		schema.encodingFormat constant "application/pdf";
+		schema.contentUrl from ContentUrl with datatype schema.URL;
+}
+
+map BrochureLegacyImage from wikibus.brochures {
+	subject template brochureImageId with LegacyImage;
+
+    types
+        schema.ImageObject
+
+	properties
+		schema.contentUrl template "https://wikibus-sources.herokuapp.com/brochure/{0}/image" with LegacyImage as Literal;
+		schema.thumbnail template "brochure/{0}/image/small" with LegacyImage;
+}
+
+map BrochureImageThumbnail from wikibus.brochures {
+	subject template "brochure/{0}/image/small" with LegacyImage;
+
+    types
+        schema.ImageObject
+
+	properties
+		schema.contentUrl template "https://wikibus-sources.herokuapp.com/brochure/{0}/image/small" with LegacyImage as Literal;
+}
+
+map BrochureImage from wikibus.images {
+    subject template brochureId with SourceId;
+
+    properties
+        schema.image template imageId with ExternalId;
+}
+
+map BrochurePrimaryImage from wikibus.primaryImages {
+    subject template brochureId with SourceId;
+
+    properties
+        schema.primaryImageOfPage template imageId with ExternalId;
+}

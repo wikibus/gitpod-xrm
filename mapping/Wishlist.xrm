@@ -1,0 +1,43 @@
+output r2rml
+
+map Wishlist from wikibus.wishlist {
+	subject template wishlistId with User SourceId;
+
+	types
+		wbo.WishlistItem
+		hydra.Resource
+
+	properties
+		wbo.^source template brochureId with SourceId;
+		wbo.done from Done with datatype xsd.boolean;
+		wbo.user template userId with User;
+}
+
+map WishlistCollections from wikibus.wishlist {
+	subject template wishlistCollectionId with User;
+
+	types
+		wba.WishlistCollection
+		hydra.Collection
+
+	properties
+		wbo.user template userId with User;
+		hydra.manages template "wishlist-{0}-manages-type" with User as BlankNode;
+		hydra.manages template "wishlist-{0}-manages-user" with User as BlankNode;
+}
+
+map WishlistCollectionsManagesType from wikibus.wishlist {
+	subject template "wishlist-{0}-manages-type" with User as BlankNode;
+
+	properties
+		hydra.property constant "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
+		hydra.object constant "https://wikibus.org/ontology#WishlistItem";
+}
+
+map WishlistCollectionsManagesUser from wikibus.wishlist {
+	subject template "wishlist-{0}-manages-user" with User as BlankNode;
+
+	properties
+		hydra.object template userId with User;
+		hydra.property constant "https://wikibus.org/ontology#user";
+}
