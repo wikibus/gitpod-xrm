@@ -1,0 +1,121 @@
+PREFIX rr: <http://www.w3.org/ns/r2rml#>
+PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
+PREFIX wba: <https://wikibus.org/api#>
+PREFIX wbo: <https://wikibus.org/ontology#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+<#Wishlist>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """select Id, rtrim([User]) as [User], SourceId, Done from Sources.Wishlist""" ];
+	
+	rr:subjectMap [
+		rr:template "wishlist/{User}/{SourceId}";
+		rr:class wbo:WishlistItem;
+		rr:class hydra:Resource
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate wbo:source;
+		rr:objectMap [
+			rr:template "brochure/{SourceId}"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate wbo:done;
+		rr:objectMap [
+			rr:column "Done";
+			rr:datatype xsd:boolean
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate wbo:user;
+		rr:objectMap [
+			rr:template "https://users.wikibus.org/user/{User}"
+		]
+	].
+	
+<#WishlistCollections>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """select Id, rtrim([User]) as [User], SourceId, Done from Sources.Wishlist""" ];
+	
+	rr:subjectMap [
+		rr:template "wishlist/{User}";
+		rr:class wba:WishlistCollection;
+		rr:class hydra:Collection
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate wbo:user;
+		rr:objectMap [
+			rr:template "https://users.wikibus.org/user/{User}"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate hydra:manages;
+		rr:objectMap [
+			rr:template "wishlist-{User}-manages-type";
+			rr:termType rr:BlankNode
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate hydra:manages;
+		rr:objectMap [
+			rr:template "wishlist-{User}-manages-user";
+			rr:termType rr:BlankNode
+		]
+	].
+	
+<#WishlistCollectionsManagesType>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """select Id, rtrim([User]) as [User], SourceId, Done from Sources.Wishlist""" ];
+	
+	rr:subjectMap [
+		rr:template "wishlist-{User}-manages-type";
+		rr:termType rr:BlankNode
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate hydra:property;
+		rr:objectMap [
+			rr:constant <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate hydra:object;
+		rr:objectMap [
+			rr:constant <https://wikibus.org/ontology#WishlistItem>
+		]
+	].
+	
+<#WishlistCollectionsManagesUser>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """select Id, rtrim([User]) as [User], SourceId, Done from Sources.Wishlist""" ];
+	
+	rr:subjectMap [
+		rr:template "wishlist-{User}-manages-user";
+		rr:termType rr:BlankNode
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate hydra:object;
+		rr:objectMap [
+			rr:template "https://users.wikibus.org/user/{User}"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate hydra:property;
+		rr:objectMap [
+			rr:constant <https://wikibus.org/ontology#user>
+		]
+	].
+	
