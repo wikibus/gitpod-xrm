@@ -2,8 +2,8 @@ PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
-PREFIX wba: <https://wikibus.org/api#>
-PREFIX wbo: <https://wikibus.org/ontology#>
+PREFIX wba: <https://wikibus.org/api/>
+PREFIX wbo: <https://schema.wikibus.org/>
 
 <#StorageLocation>
 	a rr:TriplesMap;
@@ -16,7 +16,10 @@ PREFIX wbo: <https://wikibus.org/ontology#>
 	        join Priv.FileCabinet fc on fc.Id = s.FileCabinet""" ];
 	
 	rr:subjectMap [
-		rr:template "file-cabinet/{FileCabinet}/{FileOffset}"
+		rr:template "file-cabinet/{FileCabinet}/{FileOffset}";
+		rr:graphMap [
+		  rr:template "file-cabinet/{FileCabinet}/{FileOffset}"
+		]
 	];
 	
 	rr:predicateObjectMap [
@@ -38,7 +41,10 @@ PREFIX wbo: <https://wikibus.org/ontology#>
 	        join Priv.FileCabinet fc on fc.Id = s.FileCabinet""" ];
 	
 	rr:subjectMap [
-		rr:template "file-cabinet/{FileCabinet}"
+		rr:template "file-cabinet/{FileCabinet}";
+		rr:graphMap [
+		  rr:template "file-cabinet/{FileCabinet}"
+		]
 	];
 	
 	rr:predicateObjectMap [
@@ -56,7 +62,10 @@ PREFIX wbo: <https://wikibus.org/ontology#>
 	rr:subjectMap [
 		rr:template "file-cabinet/{Id}";
 		rr:class wbo:StorageContainer;
-		rr:class hydra:Resource
+		rr:class hydra:Resource;
+		rr:graphMap [
+		  rr:template "file-cabinet/{Id}"
+		]
 	];
 	
 	rr:predicateObjectMap [

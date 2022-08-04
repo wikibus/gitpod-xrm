@@ -5,10 +5,11 @@ template brochureImageId "brochure/{0}/image"
 map Brochure from wikibus.brochures {
 	subject template brochureId with Id;
 
+	graphs
+		template brochureId with Id;
+
 	types
-		wbo.Source
 		wbo.Brochure
-		hydra.Resource
 
 	properties
 		bibo.pages from Pages;

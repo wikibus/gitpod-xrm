@@ -3,8 +3,8 @@ output r2rml
 map StorageLocation from wikibus.sources {
 	subject template storageLocationId with FileCabinet FileOffset;
 
-	// graphs
-	//   template storageLocationId with FileCabinet FileOffset;
+	graphs
+	  template storageLocationId with FileCabinet FileOffset;
 
 	properties
 		rdfs.label template "{0} ({1})" with FileCabinetName FileOffset as Literal;
@@ -13,8 +13,8 @@ map StorageLocation from wikibus.sources {
 map CabinetParts from wikibus.sources {
 	subject template fileCabinetId with FileCabinet;
 
-	// graphs
-	//   template fileCabinetId with FileCabinet;
+	graphs
+	  template fileCabinetId with FileCabinet;
 
 	properties
 		schema.hasPart template storageLocationId with FileCabinet FileOffset;
@@ -23,8 +23,8 @@ map CabinetParts from wikibus.sources {
 map FileCabinets from wikibus.cabinets {
 	subject template fileCabinetId with Id;
 
-	// graphs
-	//   template fileCabinetId with Id;
+	graphs
+	  template fileCabinetId with Id;
 
 	types
 		wbo.StorageContainer

@@ -10,7 +10,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "image/{ExternalId}";
-		rr:class schema:ImageObject
+		rr:class schema:ImageObject;
+		rr:graphMap [
+		  rr:template "image/{ExternalId}"
+		]
 	];
 	
 	rr:predicateObjectMap [

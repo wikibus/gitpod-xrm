@@ -5,6 +5,9 @@ template magazineIssueImageId "magazine/{0}/issue/{1}/image"
 map Magazine from wikibus.magazines {
 	subject template magazineId with Slug;
 
+	graphs
+	  template magazineId with Slug;
+
 	types
 		wbo.Source
 		schema.Periodical

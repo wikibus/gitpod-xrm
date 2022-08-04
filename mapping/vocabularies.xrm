@@ -3,7 +3,7 @@ language-tags {
 }
 
 vocabulary wbo {
-	prefix "wbo" "https://wikibus.org/ontology#"
+	prefix "wbo" "https://schema.wikibus.org/"
 
 	classes
 		Brochure
@@ -25,7 +25,7 @@ vocabulary wbo {
 }
 
 vocabulary wba {
-	prefix "wba" "https://wikibus.org/api#"
+	prefix "wba" "https://wikibus.org/api/"
 
 	classes
 		WishlistCollection
@@ -36,6 +36,7 @@ vocabulary wba {
 		driveImportFolder
 		issues
 		compartments
+		migrated
 }
 
 vocabulary opus {

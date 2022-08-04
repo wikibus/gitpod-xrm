@@ -1,5 +1,5 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
-PREFIX wba: <https://wikibus.org/api#>
+PREFIX wba: <https://wikibus.org/api/>
 
 <#User>
 	a rr:TriplesMap;

@@ -3,6 +3,9 @@ output r2rml
 map Image from wikibus.images {
     subject template imageId with ExternalId;
 
+	graphs
+		template imageId with ExternalId;
+
     types
         schema.ImageObject
 

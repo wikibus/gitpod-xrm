@@ -5,7 +5,6 @@ map Wishlist from wikibus.wishlist {
 
 	types
 		wbo.WishlistItem
-		hydra.Resource
 
 	properties
 		wbo.^source template brochureId with SourceId;
@@ -18,7 +17,6 @@ map WishlistCollections from wikibus.wishlist {
 
 	types
 		wba.WishlistCollection
-		hydra.Collection
 
 	properties
 		wbo.user template userId with User;

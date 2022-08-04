@@ -5,15 +5,13 @@ template bookImageId "book/{0}/image"
 map Book from wikibus.books {
 	subject template bookId with Id;
 
-	//graphs
-	//	template bookId with Id;
+	graphs
+		template bookId with Id;
 
 	types
-		wbo.Source
 		wbo.Book
 		schema.Book
 		bibo.Book
-		hydra.Resource
 
 	properties
 		bibo.pages from Pages;
@@ -28,6 +26,7 @@ map Book from wikibus.books {
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
 		wba.images template sourceImageCollection with Id;
+		wba.migrated constant "true";
 }
 
 map BookOwners from wikibus.books {
