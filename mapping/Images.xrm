@@ -1,16 +1,21 @@
 output r2rml
 
+template cloudinaryUrl "https://res.cloudinary.com/dytcmwide/image/upload/t_default_downsize/v1599422851/{0}.jpg"
+template cloudinaryThumbUrl "https://res.cloudinary.com/dytcmwide/image/upload/t_media_lib_thumb/v1599422851/{0}.jpg"
+template magazineIssueImageId "magazine/{0}/issue/{1}/image"
+
 map Image from wikibus.images {
-    subject template imageId with ExternalId;
+    subject template imageId with SourceType ExternalId;
 
 	graphs
-		template imageId with ExternalId;
+		template imageId with SourceType ExternalId;
 
     types
         schema.ImageObject
 
     properties
-        schema.contentUrl from OriginalUrl with datatype schema.URL;
+        schema.identifier from ExternalId;
+        schema.contentUrl template cloudinaryUrl with ExternalId;
         schema.thumbnail template "cloudinary-image-{0}" with Id as BlankNode;
         dtype.orderIndex from OrderIndex with datatype xsd.int;
 }
@@ -18,9 +23,57 @@ map Image from wikibus.images {
 map ImageThumbnail from wikibus.images {
     subject template "cloudinary-image-{0}" with Id as BlankNode;
 
+	graphs
+		template imageId with SourceType ExternalId;
+
+    properties
+        schema.contentUrl template cloudinaryThumbUrl with ExternalId;
+}
+
+map LegacyImage from wikibus.legacy_images {
+	subject template imageId with SourceType Id;
+	
+	graphs
+        template imageId with SourceType Id;
+
     types
         schema.ImageObject
 
-    properties
-        schema.contentUrl from ThumbnailUrl with datatype schema.URL;
+	properties
+		schema.contentUrl template "https://wikibus-sources.herokuapp.com/{0}/{1}/image" with SourceType Id;
+		schema.thumbnail template "{0}/{1}/image/small" with SourceType Id;
+}
+
+map LegacyImageThumbnail from wikibus.legacy_images {
+	subject template "{0}/{1}/image/small" with SourceType Id;
+
+	graphs
+        template imageId with SourceType Id;
+
+	properties
+		schema.contentUrl template "https://wikibus-sources.herokuapp.com/{0}/{1}/image/small" with SourceType Id;
+}
+
+map MagazineIssueLegacyImage from wikibus.magazine_legacy_images {
+	subject template magazineIssueImageId with MagazineSlug Id;
+
+	graphs
+	  template magazineIssueImageId with MagazineSlug Id;
+
+    types
+        schema.ImageObject
+
+	properties
+		schema.contentUrl template "https://wikibus-sources.herokuapp.com/magazine/{0}/issue/{1}/image" with MagName MagIssueNumber;
+		schema.thumbnail template "issue-image-thumb-{0}-{1}" with MagazineSlug Id as BlankNode;
+}
+
+map MagazineIssueImageThumbnail from wikibus.magazine_legacy_images {
+	subject template "issue-image-thumb-{0}-{1}" with MagazineSlug Id as BlankNode;
+
+	graphs
+	  template magazineIssueImageId with MagazineSlug Id;
+
+	properties
+		schema.contentUrl template "https://wikibus-sources.herokuapp.com/magazine/{0}/issue/{1}/image/small" with MagName MagIssueNumber;
 }

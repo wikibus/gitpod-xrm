@@ -4,7 +4,7 @@ map StorageLocation from wikibus.sources {
 	subject template storageLocationId with FileCabinet FileOffset;
 
 	graphs
-	  template storageLocationId with FileCabinet FileOffset;
+	  template fileCabinetId with FileCabinet;
 
 	properties
 		rdfs.label template "{0} ({1})" with FileCabinetName FileOffset as Literal;
@@ -28,7 +28,6 @@ map FileCabinets from wikibus.cabinets {
 
 	types
 		wbo.StorageContainer
-		hydra.Resource
 
 	properties
 		rdfs.label from Description;

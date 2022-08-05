@@ -1,10 +1,10 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX bibo: <http://purl.org/ontology/bibo/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX opus: <http://lsdis.cs.uga.edu/projects/semdis/opus#>
 PREFIX schema: <http://schema.org/>
 PREFIX wba: <https://wikibus.org/api/>
-PREFIX wbo: <https://schema.wikibus.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 <#Book>
@@ -12,11 +12,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:logicalTable [ rr:sqlQuery """select
 	    Id,
+		SourceType,
 	    Pages,
 	    Year,
 	    IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
 	    BookTitle,
-	    BookISBN,
+	    trim(BookISBN) as BookISBN,
 	    BookAuthor,
 	    rtrim([User]) as [User],
 		DateCreated,
@@ -29,7 +30,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "book/{Id}";
-		rr:class wbo:Book;
+		rr:class wba:Book;
 		rr:class schema:Book;
 		rr:class bibo:Book;
 		rr:graphMap [
@@ -83,14 +84,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:predicateObjectMap [
 		rr:predicate schema:image;
 		rr:objectMap [
-			rr:template "book/{LegacyImage}/image"
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate schema:primaryImageOfPage;
-		rr:objectMap [
-			rr:template "book/{LegacyImage}/image"
+			rr:template "image/{SourceType}-{Id}"
 		]
 	];
 	
@@ -117,16 +111,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate wba:images;
+		rr:predicate wba:migrated;
 		rr:objectMap [
-			rr:template "source/{Id}/images"
+			rr:constant "true"
 		]
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate wba:migrated;
+		rr:predicate foaf:depiction;
 		rr:objectMap [
-			rr:constant "true"
+			rr:template "image/{SourceType}-{Id}"
 		]
 	].
 	
@@ -135,11 +129,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:logicalTable [ rr:sqlQuery """select
 	    Id,
+		SourceType,
 	    Pages,
 	    Year,
 	    IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
 	    BookTitle,
-	    BookISBN,
+	    trim(BookISBN) as BookISBN,
 	    BookAuthor,
 	    rtrim([User]) as [User],
 		DateCreated,
@@ -151,7 +146,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	where SourceType = 'book'""" ];
 	
 	rr:subjectMap [
-		rr:template "https://users.wikibus.org/user/{User}"
+		rr:template "https://users.wikibus.org/user/{User}";
+		rr:graphMap [
+		  rr:template "user/{User}/books"
+		]
 	];
 	
 	rr:predicateObjectMap [
@@ -166,11 +164,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:logicalTable [ rr:sqlQuery """select
 	    Id,
+		SourceType,
 	    Pages,
 	    Year,
 	    IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
 	    BookTitle,
-	    BookISBN,
+	    trim(BookISBN) as BookISBN,
 	    BookAuthor,
 	    rtrim([User]) as [User],
 		DateCreated,
@@ -183,86 +182,16 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "book-{Id}-author";
-		rr:termType rr:BlankNode
+		rr:termType rr:BlankNode;
+		rr:graphMap [
+		  rr:template "book/{Id}"
+		]
 	];
 	
 	rr:predicateObjectMap [
 		rr:predicate schema:name;
 		rr:objectMap [
 			rr:column "BookAuthor"
-		]
-	].
-	
-<#BookLegacyImage>
-	a rr:TriplesMap;
-	
-	rr:logicalTable [ rr:sqlQuery """select
-	    Id,
-	    Pages,
-	    Year,
-	    IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
-	    BookTitle,
-	    BookISBN,
-	    BookAuthor,
-	    rtrim([User]) as [User],
-		DateCreated,
-	    DateUpdated,
-	    IIF(rtrim(value) = '', NULL, value) as Language,
-	    IIF(Image is NULL, NULL, Id) as LegacyImage
-	from Sources.Source
-	         CROSS APPLY STRING_SPLIT(Languages, ';')
-	where SourceType = 'book'""" ];
-	
-	rr:subjectMap [
-		rr:template "book/{LegacyImage}/image";
-		rr:class schema:ImageObject
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate schema:contentUrl;
-		rr:objectMap [
-			rr:template "https://wikibus-sources.herokuapp.com/book/{LegacyImage}/image";
-			rr:termType rr:Literal
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate schema:thumbnail;
-		rr:objectMap [
-			rr:template "book/{LegacyImage}/image/small"
-		]
-	].
-	
-<#BookImageThumbnail>
-	a rr:TriplesMap;
-	
-	rr:logicalTable [ rr:sqlQuery """select
-	    Id,
-	    Pages,
-	    Year,
-	    IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
-	    BookTitle,
-	    BookISBN,
-	    BookAuthor,
-	    rtrim([User]) as [User],
-		DateCreated,
-	    DateUpdated,
-	    IIF(rtrim(value) = '', NULL, value) as Language,
-	    IIF(Image is NULL, NULL, Id) as LegacyImage
-	from Sources.Source
-	         CROSS APPLY STRING_SPLIT(Languages, ';')
-	where SourceType = 'book'""" ];
-	
-	rr:subjectMap [
-		rr:template "book/{LegacyImage}/image/small";
-		rr:class schema:ImageObject
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate schema:contentUrl;
-		rr:objectMap [
-			rr:template "https://wikibus-sources.herokuapp.com/book/{LegacyImage}/image/small";
-			rr:termType rr:Literal
 		]
 	].
 	

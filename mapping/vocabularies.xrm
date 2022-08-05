@@ -8,7 +8,6 @@ vocabulary wbo {
 	classes
 		Brochure
 		Source
-		Book
 		WishlistItem
 		StorageLocation
 		StorageContainer
@@ -20,7 +19,6 @@ vocabulary wbo {
 		name
 		^source
 		done
-		user
 		size
 }
 
@@ -28,10 +26,10 @@ vocabulary wba {
 	prefix "wba" "https://wikibus.org/api/"
 
 	classes
+		Book
 		WishlistCollection
 
 	properties
-		images
 		wishlistItem
 		driveImportFolder
 		issues
@@ -111,7 +109,6 @@ vocabulary schema {
 		contributor
 		associatedMedia
 		image
-		primaryImageOfPage
 		encodingFormat
 		contentSize
 		contentUrl
@@ -124,16 +121,20 @@ vocabulary schema {
 		hasPart
 		issueNumber
 		containedInPlace
+		encodesCreativeWork
+}
 
-	datatypes
-		URL
+vocabulary foaf {
+	prefix "foaf" "http://xmlns.com/foaf/0.1/"
+
+	properties
+		depiction
 }
 
 vocabulary hydra {
 	prefix "hydra" "http://www.w3.org/ns/hydra/core#"
 
 	classes
-		Resource
 		Collection
 
 	properties
@@ -155,4 +156,11 @@ vocabulary dcat {
 
 	properties
 		byteSize
+}
+
+vocabulary acl {
+	prefix "acl" "http://www.w3.org/ns/auth/acl#"
+
+	properties
+		owner
 }

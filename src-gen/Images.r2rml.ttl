@@ -6,21 +6,30 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <#Image>
 	a rr:TriplesMap;
 	
-	rr:logicalTable [ rr:tableName "[Sources].[Images]" ];
+	rr:logicalTable [ rr:sqlQuery """
+				select i.*, s.SourceType
+				from [Sources].[Images] i 
+				join [Sources].[Source] s on i.SourceId = s.Id""" ];
 	
 	rr:subjectMap [
-		rr:template "image/{ExternalId}";
+		rr:template "image/{SourceType}-{ExternalId}";
 		rr:class schema:ImageObject;
 		rr:graphMap [
-		  rr:template "image/{ExternalId}"
+		  rr:template "image/{SourceType}-{ExternalId}"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate schema:identifier;
+		rr:objectMap [
+			rr:column "ExternalId"
 		]
 	];
 	
 	rr:predicateObjectMap [
 		rr:predicate schema:contentUrl;
 		rr:objectMap [
-			rr:column "OriginalUrl";
-			rr:datatype schema:URL
+			rr:template "https://res.cloudinary.com/dytcmwide/image/upload/t_default_downsize/v1599422851/{ExternalId}.jpg"
 		]
 	];
 	
@@ -43,19 +52,155 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 <#ImageThumbnail>
 	a rr:TriplesMap;
 	
-	rr:logicalTable [ rr:tableName "[Sources].[Images]" ];
+	rr:logicalTable [ rr:sqlQuery """
+				select i.*, s.SourceType
+				from [Sources].[Images] i 
+				join [Sources].[Source] s on i.SourceId = s.Id""" ];
 	
 	rr:subjectMap [
 		rr:template "cloudinary-image-{Id}";
-		rr:class schema:ImageObject;
-		rr:termType rr:BlankNode
+		rr:termType rr:BlankNode;
+		rr:graphMap [
+		  rr:template "image/{SourceType}-{ExternalId}"
+		]
 	];
 	
 	rr:predicateObjectMap [
 		rr:predicate schema:contentUrl;
 		rr:objectMap [
-			rr:column "ThumbnailUrl";
-			rr:datatype schema:URL
+			rr:template "https://res.cloudinary.com/dytcmwide/image/upload/t_media_lib_thumb/v1599422851/{ExternalId}.jpg"
+		]
+	].
+	
+<#LegacyImage>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """
+				select
+					Id,
+					IIF(SourceType = 'folder', 'brochure', SourceType) as SourceType
+				from [Sources].Source
+				where Image is NOT NULL
+			""" ];
+	
+	rr:subjectMap [
+		rr:template "image/{SourceType}-{Id}";
+		rr:class schema:ImageObject;
+		rr:graphMap [
+		  rr:template "image/{SourceType}-{Id}"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate schema:contentUrl;
+		rr:objectMap [
+			rr:template "https://wikibus-sources.herokuapp.com/{SourceType}/{Id}/image"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate schema:thumbnail;
+		rr:objectMap [
+			rr:template "{SourceType}/{Id}/image/small"
+		]
+	].
+	
+<#LegacyImageThumbnail>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """
+				select
+					Id,
+					IIF(SourceType = 'folder', 'brochure', SourceType) as SourceType
+				from [Sources].Source
+				where Image is NOT NULL
+			""" ];
+	
+	rr:subjectMap [
+		rr:template "{SourceType}/{Id}/image/small";
+		rr:graphMap [
+		  rr:template "image/{SourceType}-{Id}"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate schema:contentUrl;
+		rr:objectMap [
+			rr:template "https://wikibus-sources.herokuapp.com/{SourceType}/{Id}/image/small"
+		]
+	].
+	
+<#MagazineIssueLegacyImage>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """
+				select
+					s.Id,
+					s.MagIssueNumber,
+					m.Name as MagName,
+	    			lower(replace(
+						replace(
+							cast(m.Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
+							' ', '-'),
+						'&', '-')) as MagazineSlug
+				from [Sources].Source s
+				join Sources.Magazine m on m.Id = s.MagIssueMagazine
+				where s.Image is NOT NULL
+			""" ];
+	
+	rr:subjectMap [
+		rr:template "magazine/{MagazineSlug}/issue/{Id}/image";
+		rr:class schema:ImageObject;
+		rr:graphMap [
+		  rr:template "magazine/{MagazineSlug}/issue/{Id}/image"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate schema:contentUrl;
+		rr:objectMap [
+			rr:template "https://wikibus-sources.herokuapp.com/magazine/{MagName}/issue/{MagIssueNumber}/image"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate schema:thumbnail;
+		rr:objectMap [
+			rr:template "issue-image-thumb-{MagazineSlug}-{Id}";
+			rr:termType rr:BlankNode
+		]
+	].
+	
+<#MagazineIssueImageThumbnail>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """
+				select
+					s.Id,
+					s.MagIssueNumber,
+					m.Name as MagName,
+	    			lower(replace(
+						replace(
+							cast(m.Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
+							' ', '-'),
+						'&', '-')) as MagazineSlug
+				from [Sources].Source s
+				join Sources.Magazine m on m.Id = s.MagIssueMagazine
+				where s.Image is NOT NULL
+			""" ];
+	
+	rr:subjectMap [
+		rr:template "issue-image-thumb-{MagazineSlug}-{Id}";
+		rr:termType rr:BlankNode;
+		rr:graphMap [
+		  rr:template "magazine/{MagazineSlug}/issue/{Id}/image"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate schema:contentUrl;
+		rr:objectMap [
+			rr:template "https://wikibus-sources.herokuapp.com/magazine/{MagName}/issue/{MagIssueNumber}/image/small"
 		]
 	].
 	

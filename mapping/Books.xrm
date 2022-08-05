@@ -1,7 +1,5 @@
 output r2rml
 
-template bookImageId "book/{0}/image"
-
 map Book from wikibus.books {
 	subject template bookId with Id;
 
@@ -9,7 +7,7 @@ map Book from wikibus.books {
 		template bookId with Id;
 
 	types
-		wbo.Book
+		wba.Book
 		schema.Book
 		bibo.Book
 
@@ -20,17 +18,20 @@ map Book from wikibus.books {
 		dcterms.title from BookTitle;
 		schema.isbn from BookISBN;
 		dcterms.language template languageId with Language;
-		schema.image template bookImageId with LegacyImage;
-		schema.primaryImageOfPage template bookImageId with LegacyImage;
+		schema.image template imageId with SourceType Id;
+		// schema.primaryImageOfPage template bookImageId with LegacyImage;
 		schema.author template "book-{0}-author" with Id as BlankNode;
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
-		wba.images template sourceImageCollection with Id;
 		wba.migrated constant "true";
+		foaf.depiction template imageId with SourceType Id;
 }
 
 map BookOwners from wikibus.books {
 	subject template userId with User;
+
+	graphs
+		template "user/{0}/books" with User;
 
 	properties
 		schema.owns template bookId with Id;
@@ -39,27 +40,9 @@ map BookOwners from wikibus.books {
 map BookAuthors from wikibus.books {
 	subject template "book-{0}-author" with Id as BlankNode;
 
+	graphs
+		template bookId with Id;
+
 	properties
 		schema.name from BookAuthor;
-}
-
-map BookLegacyImage from wikibus.books {
-	subject template bookImageId with LegacyImage;
-
-    types
-        schema.ImageObject
-
-	properties
-		schema.contentUrl template "https://wikibus-sources.herokuapp.com/book/{0}/image" with LegacyImage as Literal;
-		schema.thumbnail template "book/{0}/image/small" with LegacyImage;
-}
-
-map BookImageThumbnail from wikibus.books {
-	subject template "book/{0}/image/small" with LegacyImage;
-
-    types
-        schema.ImageObject
-
-	properties
-		schema.contentUrl template "https://wikibus-sources.herokuapp.com/book/{0}/image/small" with LegacyImage as Literal;
 }

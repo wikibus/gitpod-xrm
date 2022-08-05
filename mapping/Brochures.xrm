@@ -24,16 +24,19 @@ map Brochure from wikibus.brochures {
 		schema.contributor template userId with User;
 		schema.associatedMedia template brochurePdfId with Id;
 		schema.image template brochureImageId with LegacyImage;
-		schema.primaryImageOfPage template brochureImageId with LegacyImage;
+		foaf.depiction template imageId with SourceType LegacyImage;
+		// schema.primaryImageOfPage template brochureImageId with LegacyImage;
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
 		wba.wishlistItem template "wishlist/{0}" with Id;
 		schema.identifier from Id;
-		wba.images template sourceImageCollection with Id;
 }
 
-map BrochureFile from wikibus.brochures {
+map BrochureFile from wikibus.brochures_files {
 	subject template brochurePdfId with Id;
+	
+	graphs
+	 template brochurePdfId with Id;
 
 	types
 		schema.MediaObject
@@ -42,40 +45,6 @@ map BrochureFile from wikibus.brochures {
 		schema.contentSize from ContentSize;
 		dcat.byteSize from ByteSize with datatype xsd.long;
 		schema.encodingFormat constant "application/pdf";
-		schema.contentUrl from ContentUrl with datatype schema.URL;
-}
-
-map BrochureLegacyImage from wikibus.brochures {
-	subject template brochureImageId with LegacyImage;
-
-    types
-        schema.ImageObject
-
-	properties
-		schema.contentUrl template "https://wikibus-sources.herokuapp.com/brochure/{0}/image" with LegacyImage as Literal;
-		schema.thumbnail template "brochure/{0}/image/small" with LegacyImage;
-}
-
-map BrochureImageThumbnail from wikibus.brochures {
-	subject template "brochure/{0}/image/small" with LegacyImage;
-
-    types
-        schema.ImageObject
-
-	properties
-		schema.contentUrl template "https://wikibus-sources.herokuapp.com/brochure/{0}/image/small" with LegacyImage as Literal;
-}
-
-map BrochureImage from wikibus.images {
-    subject template brochureId with SourceId;
-
-    properties
-        schema.image template imageId with ExternalId;
-}
-
-map BrochurePrimaryImage from wikibus.primaryImages {
-    subject template brochureId with SourceId;
-
-    properties
-        schema.primaryImageOfPage template imageId with ExternalId;
+		schema.contentUrl from ContentUrl;
+		schema.encodesCreativeWork template brochureId with Id;
 }

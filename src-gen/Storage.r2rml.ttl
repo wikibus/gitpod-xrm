@@ -1,5 +1,4 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
-PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
 PREFIX wba: <https://wikibus.org/api/>
@@ -18,7 +17,7 @@ PREFIX wbo: <https://schema.wikibus.org/>
 	rr:subjectMap [
 		rr:template "file-cabinet/{FileCabinet}/{FileOffset}";
 		rr:graphMap [
-		  rr:template "file-cabinet/{FileCabinet}/{FileOffset}"
+		  rr:template "file-cabinet/{FileCabinet}"
 		]
 	];
 	
@@ -62,7 +61,6 @@ PREFIX wbo: <https://schema.wikibus.org/>
 	rr:subjectMap [
 		rr:template "file-cabinet/{Id}";
 		rr:class wbo:StorageContainer;
-		rr:class hydra:Resource;
 		rr:graphMap [
 		  rr:template "file-cabinet/{Id}"
 		]

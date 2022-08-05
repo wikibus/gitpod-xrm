@@ -19,6 +19,7 @@ source-group wikibus {
 	logical-source brochures {
 		source query "select
        Id,
+	   'brochure' as SourceType,
        Pages,
        Year,
        Month,
@@ -31,9 +32,6 @@ source-group wikibus {
        rtrim([User]) as [User],
        DateCreated,
        DateUpdated,
-       ContentSize as ByteSize,
-	   concat(cast(round(cast(ContentSize as decimal) / 1024 /1024, 2) as decimal(4,2)), ' MB') as ContentSize,
-       ContentUrl,
        IIF(rtrim(value) = '', NULL, value) as Language,
 	   IIF(Image is NULL, NULL, Id) as LegacyImage
 from Sources.Source
@@ -54,21 +52,73 @@ where SourceType = 'folder'"
 			User
 			DateCreated
 			DateUpdated
+			Language
+			LegacyImage
+			SourceType
+	}
+
+	logical-source brochures_files {
+		source query "select
+			Id,
+			ContentSize as ByteSize,
+			concat(cast(round(cast(ContentSize as decimal) / 1024 /1024, 2) as decimal(4,2)), ' MB') as ContentSize,
+			ContentUrl
+		from Sources.Source
+		where SourceType = 'folder' and ContentUrl IS NOT NULL"
+
+		referenceables
+			Id
 			ContentSize
 			ByteSize
 			ContentUrl
-			Language
-			LegacyImage
+	}
+
+	logical-source legacy_images {
+		source query "
+			select
+				Id,
+				IIF(SourceType = 'folder', 'brochure', SourceType) as SourceType
+			from [Sources].Source
+			where Image is NOT NULL
+		"
+
+		referenceables
+			Id
+			SourceType
+	}
+
+	logical-source magazine_legacy_images {
+		source query "
+			select
+				s.Id,
+				s.MagIssueNumber,
+				m.Name as MagName,
+    			lower(replace(
+					replace(
+						cast(m.Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
+						' ', '-'),
+					'&', '-')) as MagazineSlug
+			from [Sources].Source s
+			join Sources.Magazine m on m.Id = s.MagIssueMagazine
+			where s.Image is NOT NULL
+		"
+
+		referenceables
+			Id
+			MagName
+			MagazineSlug
+			MagIssueNumber
 	}
 
 	logical-source books {
 		source query "select
     Id,
+	SourceType,
     Pages,
     Year,
     IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
     BookTitle,
-    BookISBN,
+    trim(BookISBN) as BookISBN,
     BookAuthor,
     rtrim([User]) as [User],
 	DateCreated,
@@ -93,6 +143,7 @@ where SourceType = 'book'"
 			LegacyImage
 			DateCreated
 			DateUpdated
+			SourceType
 	}
 
 	logical-source primaryImages {
@@ -109,15 +160,17 @@ where SourceType = 'book'"
 	}
 
 	logical-source images {
-		source "[Sources].[Images]"
+		source query "
+			select i.*, s.SourceType
+			from [Sources].[Images] i 
+			join [Sources].[Source] s on i.SourceId = s.Id"
 
 		referenceables
 			SourceId
 			Id
-			OriginalUrl
-			ThumbnailUrl
 			ExternalId
 			OrderIndex
+			SourceType
 	}
 
 	logical-source users {
