@@ -13,9 +13,8 @@ map Brochure from wikibus.brochures {
 
 	properties
 		bibo.pages from Pages;
-		opus.year from Year with datatype xsd.gYear;
-		opus.month from Month with datatype xsd.gMonth;
-		dcterms.date template date with Year Month Day;
+		dcterms.date from YearMonth with datatype xsd.gYearMonth;
+		dcterms.date from Date with datatype xsd.date;
 		schema.containedInPlace template storageLocationId with FileCabinet FileOffset;
 		dcterms.language template languageId with Language;
 		dcterms.title from FolderName;

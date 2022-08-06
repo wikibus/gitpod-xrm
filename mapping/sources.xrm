@@ -18,32 +18,38 @@ source-group wikibus {
 
 	logical-source brochures {
 		source query "select
-       Id,
-	   'brochure' as SourceType,
-       Pages,
-       Year,
-       Month,
-       Day,
-       IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
-	   FileCabinet,
-	   FileOffset,
-       FolderCode,
-       FolderName,
-       rtrim([User]) as [User],
-       DateCreated,
-       DateUpdated,
-       IIF(rtrim(value) = '', NULL, value) as Language,
-	   IIF(Image is NULL, NULL, Id) as LegacyImage
-from Sources.Source
-CROSS APPLY STRING_SPLIT(Languages, ';')
-where SourceType = 'folder'"
+			Id,
+			'brochure' as SourceType,
+			Pages,
+			IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
+			FileCabinet,
+			FileOffset,
+			FolderCode,
+			FolderName,
+			rtrim([User]) as [User],
+			DateCreated,
+			DateUpdated,
+			IIF(rtrim(value) = '', NULL, value) as Language,
+			IIF(Image is NULL, NULL, Id) as LegacyImage,
+			IIF(
+				Day is not null and Month is not null and Year is not null,
+				CONCAT(format(Year, '0000'), '-', format(month, '00'), '-', format(Day, '00')),
+				NULL
+			) as Date,
+			IIF(
+				Day is null and Month is not null and Year is not null,
+				CONCAT(format(Year, '0000'), '-', format(month, '00')),
+				NULL
+			) as YearMonth
+		from Sources.Source
+		CROSS APPLY STRING_SPLIT(Languages, ';')
+		where SourceType = 'folder'"
 
 		referenceables
 			Id
 			Pages
-			Year
-			Month
-			Day
+			YearMonth
+			Date
 			Notes
 			FileCabinet
 			FileOffset
@@ -183,12 +189,12 @@ where SourceType = 'book'"
 
 	logical-source magazines {
 		source query "select *,
-    lower(replace(
-        replace(
-            cast(Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
-        ' ', '-'),
-    '&', '-')) as Slug
-from Sources.Magazine"
+			lower(replace(
+				replace(
+					cast(Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
+				' ', '-'),
+			'&', '-')) as Slug
+		from Sources.Magazine"
 
 		referenceables
 			Id
@@ -199,36 +205,42 @@ from Sources.Magazine"
 
 	logical-source magazineIssues {
 		source query "select
-    s.Id,
-    s.Pages,
-    s.Year,
-    s.Month,
-    s.Day,
-    IIF(rtrim(Notes) = '', NULL, s.Notes) as Notes,
-    s.FileCabinet,
-    s.FileOffset,
-    s.MagIssueNumber,
-    rtrim(s.[User]) as [User],
-    DateCreated,
-    DateUpdated,
-    IIF(rtrim(value) = '', NULL, value) as Language,
-    IIF(s.Image is NULL, NULL, s.Id) as LegacyImage,
-    lower(replace(
-            replace(
-                    cast(m.Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
-                    ' ', '-'),
-            '&', '-')) as MagazineSlug
-from Sources.Source s
-         join Sources.Magazine m on m.Id = s.MagIssueMagazine
-         CROSS APPLY STRING_SPLIT(s.Languages, ';')
-where s.SourceType = 'magissue'"
+			s.Id,
+			s.Pages,
+			IIF(rtrim(Notes) = '', NULL, s.Notes) as Notes,
+			s.FileCabinet,
+			s.FileOffset,
+			s.MagIssueNumber,
+			rtrim(s.[User]) as [User],
+			DateCreated,
+			DateUpdated,
+			IIF(rtrim(value) = '', NULL, value) as Language,
+			IIF(s.Image is NULL, NULL, s.Id) as LegacyImage,
+			IIF(
+				Day is not null and Month is not null and Year is not null,
+				CONCAT(format(Year, '0000'), '-', format(month, '00'), '-', format(Day, '00')),
+				NULL
+			) as Date,
+			IIF(
+				Day is null and Month is not null and Year is not null,
+				CONCAT(format(Year, '0000'), '-', format(month, '00')),
+				NULL
+			) as YearMonth,
+			lower(replace(
+					replace(
+							cast(m.Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
+							' ', '-'),
+					'&', '-')) as MagazineSlug
+		from Sources.Source s
+				join Sources.Magazine m on m.Id = s.MagIssueMagazine
+				CROSS APPLY STRING_SPLIT(s.Languages, ';')
+		where s.SourceType = 'magissue'"
 
 		referenceables
 			Id
 			Pages
-			Year
-			Month
-			Day
+			Date
+			YearMonth
 			Notes
 			FileCabinet
 			FileOffset

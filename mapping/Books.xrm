@@ -13,12 +13,11 @@ map Book from wikibus.books {
 
 	properties
 		bibo.pages from Pages;
-		opus.year from Year with datatype xsd.gYear;
+		dcterms.date from Year with datatype xsd.gYear;
 		dcterms.description from Notes;
 		dcterms.title from BookTitle;
 		schema.isbn from BookISBN;
 		dcterms.language template languageId with Language;
-		schema.image template imageId with SourceType Id;
 		// schema.primaryImageOfPage template bookImageId with LegacyImage;
 		schema.author template "book-{0}-author" with Id as BlankNode;
 		dcterms.created from DateCreated;
