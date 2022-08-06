@@ -41,11 +41,11 @@ map LegacyImage from wikibus.legacy_images {
 
 	properties
 		schema.contentUrl template "https://wikibus-sources.herokuapp.com/{0}/{1}/image" with SourceType Id;
-		schema.thumbnail template "{0}/{1}/image/small" with SourceType Id;
+		schema.thumbnail template "{0}/{1}/image/small" with SourceType Id as BlankNode;
 }
 
 map LegacyImageThumbnail from wikibus.legacy_images {
-	subject template "{0}/{1}/image/small" with SourceType Id;
+	subject template "{0}/{1}/image/small" with SourceType Id as BlankNode;
 
 	graphs
         template imageId with SourceType Id;
