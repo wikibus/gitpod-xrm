@@ -22,7 +22,6 @@ map Brochure from wikibus.brochures {
 		dcterms.identifier from FolderCode;
 		schema.contributor template userId with User;
 		schema.associatedMedia template brochurePdfId with Id;
-		schema.image template brochureImageId with LegacyImage;
 		foaf.depiction template imageId with SourceType LegacyImage;
 		// schema.primaryImageOfPage template brochureImageId with LegacyImage;
 		dcterms.created from DateCreated;
