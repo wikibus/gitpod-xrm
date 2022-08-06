@@ -4,7 +4,6 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX schema: <http://schema.org/>
 PREFIX wba: <https://wikibus.org/api/>
-PREFIX wbo: <https://schema.wikibus.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 <#Magazine>
@@ -20,7 +19,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "magazine/{Slug}";
-		rr:class wbo:Source;
+		rr:class wba:Source;
 		rr:class schema:Periodical;
 		rr:graphMap [
 		  rr:template "magazine/{Slug}"
@@ -85,7 +84,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "magazine/{MagazineSlug}/issue/{Id}";
-		rr:class wbo:Source;
+		rr:class wba:Source;
 		rr:graphMap [
 		  rr:template "magazine/{MagazineSlug}/issue/{Id}"
 		]

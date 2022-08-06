@@ -27,7 +27,7 @@ map FileCabinets from wikibus.cabinets {
 	  template fileCabinetId with Id;
 
 	types
-		wbo.StorageContainer
+		wba.StorageContainer
 
 	properties
 		rdfs.label from Description;

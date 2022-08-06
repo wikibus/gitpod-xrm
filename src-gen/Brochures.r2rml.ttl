@@ -5,7 +5,6 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX schema: <http://schema.org/>
 PREFIX wba: <https://wikibus.org/api/>
-PREFIX wbo: <https://schema.wikibus.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 <#Brochure>
@@ -41,7 +40,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "brochure/{Id}";
-		rr:class wbo:Brochure;
+		rr:class wba:Brochure;
 		rr:graphMap [
 		  rr:template "brochure/{Id}"
 		]

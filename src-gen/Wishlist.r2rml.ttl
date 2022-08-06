@@ -12,7 +12,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "wishlist/{User}/{SourceId}";
-		rr:class wbo:WishlistItem;
+		rr:class wba:WishlistItem;
 		rr:graphMap [
 		  rr:template "wishlist/{User}/{SourceId}"
 		]

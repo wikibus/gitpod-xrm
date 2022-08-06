@@ -9,7 +9,7 @@ map Brochure from wikibus.brochures {
 		template brochureId with Id;
 
 	types
-		wbo.Brochure
+		wba.Brochure
 
 	properties
 		bibo.pages from Pages;

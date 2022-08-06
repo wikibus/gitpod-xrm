@@ -60,7 +60,7 @@ PREFIX wbo: <https://schema.wikibus.org/>
 	
 	rr:subjectMap [
 		rr:template "file-cabinet/{Id}";
-		rr:class wbo:StorageContainer;
+		rr:class wba:StorageContainer;
 		rr:graphMap [
 		  rr:template "file-cabinet/{Id}"
 		]

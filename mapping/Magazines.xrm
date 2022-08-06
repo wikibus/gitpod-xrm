@@ -7,7 +7,7 @@ map Magazine from wikibus.magazines {
 	  template magazineId with Slug;
 
 	types
-		wbo.Source
+		wba.Source
 		schema.Periodical
 
 	properties
@@ -23,7 +23,7 @@ map MagazineIssue from wikibus.magazineIssues {
 	  template magazineIssueId with MagazineSlug Id;
 
 	types
-		wbo.Source
+		wba.Source
 
 	properties
 		bibo.pages from Pages;

@@ -5,16 +5,6 @@ language-tags {
 vocabulary wbo {
 	prefix "wbo" "https://schema.wikibus.org/"
 
-	classes
-		Brochure
-		Source
-		WishlistItem
-		StorageLocation
-		StorageContainer
-		WishlistCollection
-		Wishlist
-		User
-
 	properties
 		name
 		^source
@@ -27,7 +17,14 @@ vocabulary wba {
 
 	classes
 		Book
+		Brochure
+		Source
+		WishlistItem
+		StorageLocation
+		StorageContainer
 		WishlistCollection
+		Wishlist
+		User
 
 	properties
 		wishlistItem
