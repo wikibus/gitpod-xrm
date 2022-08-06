@@ -101,7 +101,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:predicateObjectMap [
 		rr:predicate schema:thumbnail;
 		rr:objectMap [
-			rr:template "{SourceType}/{Id}/image/small"
+			rr:template "{SourceType}/{Id}/image/small";
+			rr:termType rr:BlankNode
 		]
 	].
 	
@@ -118,6 +119,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "{SourceType}/{Id}/image/small";
+		rr:termType rr:BlankNode;
 		rr:graphMap [
 		  rr:template "image/{SourceType}-{Id}"
 		]

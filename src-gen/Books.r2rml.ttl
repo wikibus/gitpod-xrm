@@ -2,7 +2,6 @@ PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX bibo: <http://purl.org/ontology/bibo/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX opus: <http://lsdis.cs.uga.edu/projects/semdis/opus#>
 PREFIX schema: <http://schema.org/>
 PREFIX wba: <https://wikibus.org/api/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -46,7 +45,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate opus:year;
+		rr:predicate dcterms:date;
 		rr:objectMap [
 			rr:column "Year";
 			rr:datatype xsd:gYear
@@ -78,13 +77,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		rr:predicate dcterms:language;
 		rr:objectMap [
 			rr:template "http://lexvo.org/id/iso639-1/{Language}"
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate schema:image;
-		rr:objectMap [
-			rr:template "image/{SourceType}-{Id}"
 		]
 	];
 	
