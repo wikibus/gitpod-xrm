@@ -45,6 +45,7 @@ vocabulary bibo {
 
 	properties
 		pages
+		issue
 }
 
 vocabulary xsd {
@@ -101,7 +102,6 @@ vocabulary schema {
 		name
 		contributor
 		associatedMedia
-		image
 		encodingFormat
 		contentSize
 		contentUrl
@@ -112,7 +112,6 @@ vocabulary schema {
 		author
 		isPartOf
 		hasPart
-		issueNumber
 		containedInPlace
 		encodesCreativeWork
 }
