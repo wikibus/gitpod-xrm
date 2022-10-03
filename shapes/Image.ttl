@@ -1,0 +1,17 @@
+@prefix schema: <http://schema.org/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+<shape/Image>
+    a sh:NodeShape ;
+    sh:targetClass schema:ImageObject ;
+    sh:property
+        [
+            sh:path schema:contentUrl ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:IRI ;
+        ];
+.

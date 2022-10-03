@@ -23,7 +23,7 @@ map Book from wikibus.books {
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
 		wba.migrated constant "true";
-		foaf.depiction template imageId with SourceType Id;
+		foaf.depiction template imageId with SourceType LegacyImage;
 }
 
 map BookOwners from wikibus.books {

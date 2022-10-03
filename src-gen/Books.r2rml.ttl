@@ -112,7 +112,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:predicateObjectMap [
 		rr:predicate foaf:depiction;
 		rr:objectMap [
-			rr:template "image/{SourceType}-{Id}"
+			rr:template "image/{SourceType}-{LegacyImage}"
 		]
 	].
 	

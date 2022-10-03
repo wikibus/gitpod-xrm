@@ -1,0 +1,62 @@
+@prefix schema: <http://schema.org/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+<shape/Book>
+    a sh:NodeShape ;
+    sh:targetClass <https://wikibus.org/api/Book> ;
+    sh:property
+        <shape/Book#pages>,
+        <shape/Book#created>,
+        <shape/Book#depiction>,
+        <shape/Book#title>,
+        <shape/Book#isbn>,
+        <shape/Book#language>;
+.
+
+<shape/Book#pages>
+    sh:path bibo:pages ;
+    sh:datatype xsd:integer ;
+    sh:maxCount 1 ;
+.
+
+<shape/Book#created>
+    sh:path dcterms:created ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:dateTime ;
+.
+
+<shape/Book#depiction>
+    sh:path foaf:depiction ;
+    sh:maxCount 1 ;
+    sh:node <shape/Image> ;
+.
+
+<shape/Book#notes>
+    sh:path dcterms:description ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+.
+
+<shape/Book#title>
+    sh:path dcterms:title ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+.
+
+<shape/Book#isbn>
+    sh:path schema:isbn ;
+    sh:maxCount 1 ;
+    sh:datatype xsd:string ;
+.
+
+<shape/Book#language>
+    sh:path dcterms:language ;
+    sh:minCount 1 ;
+    sh:nodeKind sh:IRI ;
+.
