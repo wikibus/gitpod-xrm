@@ -14,7 +14,8 @@
         <shape/Book#depiction>,
         <shape/Book#title>,
         <shape/Book#isbn>,
-        <shape/Book#language>;
+        <shape/Book#language>,
+        <shape/Book#author>;
 .
 
 <shape/Book#pages>
@@ -52,6 +53,7 @@
 <shape/Book#isbn>
     sh:path schema:isbn ;
     sh:maxCount 1 ;
+    sh:minLength 1 ;
     sh:datatype xsd:string ;
 .
 
@@ -59,4 +61,15 @@
     sh:path dcterms:language ;
     sh:minCount 1 ;
     sh:nodeKind sh:IRI ;
+.
+
+<shape/Book#author>
+  sh:path schema:author ;
+  sh:node [
+    sh:property [
+      sh:path schema:name ;
+      sh:minCount 1 ;
+      sh:datatype xsd:string ;
+    ] ;
+  ] ;
 .

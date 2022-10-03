@@ -8,8 +8,6 @@ map Book from wikibus.books {
 
 	types
 		wba.Book
-		schema.Book
-		bibo.Book
 
 	properties
 		bibo.pages from Pages;
@@ -19,7 +17,6 @@ map Book from wikibus.books {
 		schema.isbn from BookISBN;
 		dcterms.language template languageId with Language;
 		// schema.primaryImageOfPage template bookImageId with LegacyImage;
-		schema.author template "book-{0}-author" with Id as BlankNode;
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
 		wba.migrated constant "true";
@@ -36,12 +33,22 @@ map BookOwners from wikibus.books {
 		schema.owns template bookId with Id;
 }
 
-map BookAuthors from wikibus.books {
-	subject template "book-{0}-author" with Id as BlankNode;
+map BookAuthors from wikibus.bookAuthors {
+	subject template bookId with Id;
 
 	graphs
 		template bookId with Id;
 
 	properties
-		schema.name from BookAuthor;
+		schema.author template "book-{0}-author" with AuthorId as BlankNode;
+}
+
+map BookAuthorNames from wikibus.bookAuthors {
+	subject template "book-{0}-author" with AuthorId as BlankNode;
+
+	graphs
+		template bookId with Id;
+
+	properties
+		schema.name from Author;
 }

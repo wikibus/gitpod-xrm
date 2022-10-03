@@ -1,0 +1,80 @@
+@prefix schema: <http://schema.org/> .
+@prefix lang: <http://lexvo.org/id/iso639-1/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix wba: <https://wikibus.org/api/> .
+
+<shape/book/2442>
+    a sh:NodeShape ;
+    sh:targetNode <https://wikibus.lndo.site/book/2442> ;
+    sh:property
+        [
+            sh:path bibo:pages ;
+            sh:hasValue 56
+        ],
+        [
+            sh:path dcterms:date ;
+            sh:hasValue "2010"^^xsd:gYear
+        ],
+        [
+            sh:path dcterms:description ;
+            sh:hasValue "Katalog wystawy 2010"
+        ],
+        [
+            sh:path dcterms:title ;
+            sh:hasValue "Historyczne zajezdnie tramwajowe w Polsce"
+        ],
+        [
+            sh:path schema:isbn ;
+            sh:hasValue "9788392640844"
+        ],
+        [
+            sh:path dcterms:language ;
+            sh:hasValue lang:en, lang:pl
+        ],
+        [
+            sh:path schema:author ;
+            sh:node
+                [
+                    sh:property
+                        [
+                            sh:path schema:name ;
+                            sh:xone
+                            (
+                                [ sh:hasValue "Waldemar Brzoskwinia" ]
+                                [ sh:hasValue "Tomasz Sielicki" ]
+                                [ sh:hasValue "Iwo Wachowicz" ]
+                            )
+                        ] ;
+                ] ;
+        ],
+        [
+            sh:path dcterms:created ;
+            sh:hasValue "2020-08-22T21:37:48"^^xsd:dateTime ;
+        ],
+        [
+            sh:path wba:migrated ;
+            sh:hasValue "true"
+        ],
+        [
+            sh:path dcterms:depiction ;
+            sh:node
+                [
+                    sh:property
+                        [
+                            sh:path schema:contentUrl ;
+                            sh:hasValue <https://wikibus-sources.herokuapp.com/book/2442/image> ;
+                        ],
+                        [
+                            sh:path schema:thumbnail ;
+                            sh:nodeKind sh:BlankNode ;
+                        ] ,
+                        [
+                            sh:path ( schema:thumbnail schema:contentUrl );
+                            sh:hasValue <https://wikibus-sources.herokuapp.com/book/2442/image/small> ;
+                        ] ;
+                ] ;
+        ] ;
+.

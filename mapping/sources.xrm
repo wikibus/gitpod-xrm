@@ -124,7 +124,7 @@ source-group wikibus {
     Year,
     IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
     BookTitle,
-    trim(BookISBN) as BookISBN,
+    IIF(trim(BookISBN) = '', NULL, trim(BookISBN)) as BookISBN,
     BookAuthor,
     rtrim([User]) as [User],
 	DateCreated,
@@ -150,6 +150,23 @@ where SourceType = 'book'"
 			DateCreated
 			DateUpdated
 			SourceType
+	}
+
+	logical-source bookAuthors {
+		source query "
+			SELECT 
+				Id,
+				concat(Id, '_', ROW_NUMBER() over (PARTITION BY Id order by Id)) as AuthorId,
+				trim(value) as Author
+			FROM Sources.Source
+			CROSS APPLY STRING_SPLIT(BookAuthor, ',')
+			WHERE SourceType = 'book' and BookAuthor <> ''
+		"
+
+		referenceables
+			Id
+			AuthorId
+			Author
 	}
 
 	logical-source primaryImages {
