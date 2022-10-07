@@ -2,16 +2,15 @@ PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX bibo: <http://purl.org/ontology/bibo/>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX schema: <http://schema.org/>
-PREFIX wba: <https://wikibus.org/api/>
+PREFIX wbo: <https://schema.wikibus.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 <#Brochure>
 	a rr:TriplesMap;
 	
 	rr:logicalTable [ rr:sqlQuery """select
-				Id,
+				s.Id,
 				'brochure' as SourceType,
 				Pages,
 				IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
@@ -23,7 +22,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 				DateCreated,
 				DateUpdated,
 				IIF(rtrim(value) = '', NULL, value) as Language,
-				IIF(Image is NULL, NULL, Id) as LegacyImage,
+				IIF(Image is NULL, NULL, s.Id) as LegacyImage,
+				IIF(Day is null and Month is null, Year, NULL) as Year,
 				IIF(
 					Day is not null and Month is not null and Year is not null,
 					CONCAT(format(Year, '0000'), '-', format(month, '00'), '-', format(Day, '00')),
@@ -33,14 +33,17 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 					Day is null and Month is not null and Year is not null,
 					CONCAT(format(Year, '0000'), '-', format(month, '00')),
 					NULL
-				) as YearMonth
-			from Sources.Source
+				) as YearMonth,
+				i.ExternalId as Image,
+				IIF(ContentUrl is NULL, NULL, s.Id) as AssociatedMedia			
+			from Sources.Source s
+			left join Sources.Images i on i.SourceId = s.Id
 			CROSS APPLY STRING_SPLIT(Languages, ';')
 			where SourceType = 'folder'""" ];
 	
 	rr:subjectMap [
 		rr:template "brochure/{Id}";
-		rr:class wba:Brochure;
+		rr:class wbo:Brochure;
 		rr:graphMap [
 		  rr:template "brochure/{Id}"
 		]
@@ -50,6 +53,14 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		rr:predicate bibo:pages;
 		rr:objectMap [
 			rr:column "Pages"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate dcterms:date;
+		rr:objectMap [
+			rr:column "Year";
+			rr:datatype xsd:gYear
 		]
 	];
 	
@@ -114,14 +125,21 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:predicateObjectMap [
 		rr:predicate schema:associatedMedia;
 		rr:objectMap [
-			rr:template "brochure/{Id}/file"
+			rr:template "brochure/{AssociatedMedia}/file"
 		]
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate foaf:depiction;
+		rr:predicate schema:encoding;
 		rr:objectMap [
 			rr:template "image/{SourceType}-{LegacyImage}"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate schema:encoding;
+		rr:objectMap [
+			rr:template "image/{SourceType}-{Image}"
 		]
 	];
 	
@@ -140,13 +158,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate wba:wishlistItem;
-		rr:objectMap [
-			rr:template "wishlist/{Id}"
-		]
-	];
-	
-	rr:predicateObjectMap [
 		rr:predicate schema:identifier;
 		rr:objectMap [
 			rr:column "Id"
@@ -160,7 +171,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 				Id,
 				ContentSize as ByteSize,
 				concat(cast(round(cast(ContentSize as decimal) / 1024 /1024, 2) as decimal(4,2)), ' MB') as ContentSize,
-				ContentUrl
+				dbo.UrlDecode(right(ContentUrl, charindex('/', reverse(ContentUrl) + '/') - 1)) as ContentName
 			from Sources.Source
 			where SourceType = 'folder' and ContentUrl IS NOT NULL""" ];
 	
@@ -197,7 +208,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:predicateObjectMap [
 		rr:predicate schema:contentUrl;
 		rr:objectMap [
-			rr:column "ContentUrl"
+			rr:template "https://wikibus.blob.core.windows.net/sources{Id}/{ContentName}"
 		]
 	];
 	

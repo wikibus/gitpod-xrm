@@ -1,6 +1,5 @@
 @prefix schema: <http://schema.org/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -8,6 +7,7 @@
 <shape/Book>
     a sh:NodeShape ;
     sh:targetClass <https://wikibus.org/api/Book> ;
+    sh:closed true ;
     sh:property
         <shape/Book#pages>,
         <shape/Book#created>,
@@ -32,7 +32,7 @@
 .
 
 <shape/Book#depiction>
-    sh:path foaf:depiction ;
+    sh:path schema:encoding ;
     sh:maxCount 1 ;
     sh:node <shape/Image> ;
 .

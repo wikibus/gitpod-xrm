@@ -1,0 +1,93 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix wbo: <https://schema.wikibus.org/> .
+
+<shape/Brochure>
+    sh:targetClass wbo:Brochure ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property
+        [
+            sh:path dcterms:created ;
+            sh:datatype xsd:dateTime ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path dcterms:language ;
+            sh:nodeKind sh:IRI ;
+        ],
+        [
+            sh:path dcterms:modified ;
+            sh:datatype xsd:dateTime ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path dcterms:title ;
+            sh:datatype xsd:string ;
+            sh:minLength 1 ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path dcterms:description ;
+            sh:datatype xsd:string ;
+            sh:minLength 1 ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path bibo:pages ;
+            sh:datatype xsd:integer ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path schema:identifier ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path schema:associatedMedia ;
+            sh:nodeKind sh:IRI ;
+            sh:maxCount 1 ;
+            sh:node <shape/SourceMedia> ;
+        ],
+        [
+            sh:path schema:containedInPlace ;
+            sh:nodeKind sh:IRI ;
+            sh:maxCount 1 ;
+            sh:node <shape/Location> ;
+        ],
+        [
+            sh:path schema:contributor ;
+            sh:nodeKind sh:IRI ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:node <shape/Contributor> ;
+        ],
+        [
+            sh:path schema:encoding ;
+            sh:nodeKind sh:IRI ;
+            sh:node <shape/Image> ;
+        ],
+        [
+            sh:path dcterms:date ;
+            sh:or(
+                       [
+                           sh:datatype xsd:gYearMonth ;
+                       ]
+                       [
+                           sh:datatype xsd:gYear ;
+                       ]
+                       [
+                           sh:datatype xsd:date ;
+                       ]
+                   ) ;
+        ],
+        [
+            sh:path dcterms:identifier ;
+            sh:maxCount 1 ;
+        ]
+.

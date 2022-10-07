@@ -4,7 +4,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
-@prefix wba: <https://wikibus.org/api/> .
+@prefix wbo: <https://schema.wikibus.org/> .
 
 <shape/book/2442>
     a sh:NodeShape ;
@@ -12,30 +12,44 @@
     sh:property
         [
             sh:path bibo:pages ;
-            sh:hasValue 56
+            sh:hasValue 56 ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
         ],
         [
             sh:path dcterms:date ;
-            sh:hasValue "2010"^^xsd:gYear
+            sh:hasValue "2010"^^xsd:gYear ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
         ],
         [
             sh:path dcterms:description ;
-            sh:hasValue "Katalog wystawy 2010"
+            sh:hasValue "Katalog wystawy 2010" ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
         ],
         [
             sh:path dcterms:title ;
-            sh:hasValue "Historyczne zajezdnie tramwajowe w Polsce"
+            sh:hasValue "Historyczne zajezdnie tramwajowe w Polsce" ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
         ],
         [
             sh:path schema:isbn ;
-            sh:hasValue "9788392640844"
+            sh:hasValue "9788392640844" ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
         ],
         [
             sh:path dcterms:language ;
-            sh:hasValue lang:en, lang:pl
+            sh:hasValue lang:en, lang:pl ;
+            sh:minCount 2 ;
+            sh:maxCount 2 ;
         ],
         [
             sh:path schema:author ;
+            sh:minCount 3 ;
+            sh:maxCount 3 ;
             sh:node
                 [
                     sh:property
@@ -53,13 +67,19 @@
         [
             sh:path dcterms:created ;
             sh:hasValue "2020-08-22T21:37:48"^^xsd:dateTime ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
         ],
         [
-            sh:path wba:migrated ;
-            sh:hasValue "true"
+            sh:path wbo:migrated ;
+            sh:hasValue "true" ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
         ],
         [
-            sh:path dcterms:depiction ;
+            sh:path schema:encoding ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
             sh:node
                 [
                     sh:property

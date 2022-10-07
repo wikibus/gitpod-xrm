@@ -7,13 +7,13 @@ map Magazine from wikibus.magazines {
 	  template magazineId with Slug;
 
 	types
-		wba.Source
+		wbo.Source
 		schema.Periodical
 
 	properties
 		dcterms.title from Name;
 		dcterms.description from SubName;
-		wba.issues template magazineIssues with Slug;
+		wbo.issues template magazineIssues with Slug;
 }
 
 map MagazineIssue from wikibus.magazineIssues {
@@ -23,7 +23,7 @@ map MagazineIssue from wikibus.magazineIssues {
 	  template magazineIssueId with MagazineSlug Id;
 
 	types
-		wba.Source
+		wbo.Source
 
 	properties
 		bibo.pages from Pages;
@@ -35,5 +35,5 @@ map MagazineIssue from wikibus.magazineIssues {
 		bibo.issue from MagIssueNumber;
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
-		foaf.depiction template magazineIssueImageId with MagazineSlug LegacyImage;
+		schema.^encoding template magazineIssueImageId with MagazineSlug LegacyImage;
 }

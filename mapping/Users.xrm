@@ -7,5 +7,5 @@ map User from wikibus.users {
 	  template userId with UserId;
 
 	properties
-		wba.driveImportFolder from DriveImportFolder;
+		wbo.driveImportFolder from DriveImportFolder;
 }

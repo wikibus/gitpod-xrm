@@ -1,7 +1,6 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX acl: <http://www.w3.org/ns/auth/acl#>
 PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
-PREFIX wba: <https://wikibus.org/api/>
 PREFIX wbo: <https://schema.wikibus.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
@@ -12,7 +11,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "wishlist/{User}/{SourceId}";
-		rr:class wba:WishlistItem;
+		rr:class wbo:WishlistItem;
 		rr:graphMap [
 		  rr:template "wishlist/{User}/{SourceId}"
 		]
@@ -47,7 +46,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "wishlist/{UserId}";
-		rr:class wba:WishlistCollection;
+		rr:class wbo:WishlistCollection;
 		rr:graphMap [
 		  rr:template "wishlist/{UserId}"
 		]

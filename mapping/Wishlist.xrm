@@ -7,7 +7,7 @@ map WishlistItem from wikibus.wishlist {
 	  template wishlistItemId with User SourceId;
 
 	types
-		wba.WishlistItem
+		wbo.WishlistItem
 
 	properties
 		wbo.^source template brochureId with SourceId;
@@ -22,7 +22,7 @@ map Wishlists from wikibus.users {
 	  template wishlistCollectionId with UserId;
 
 	types
-		wba.WishlistCollection
+		wbo.WishlistCollection
 
 	properties
 		acl.owner template userId with UserId;

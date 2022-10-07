@@ -7,7 +7,7 @@ map Book from wikibus.books {
 		template bookId with Id;
 
 	types
-		wba.Book
+		wbo.Book
 
 	properties
 		bibo.pages from Pages;
@@ -16,11 +16,10 @@ map Book from wikibus.books {
 		dcterms.title from BookTitle;
 		schema.isbn from BookISBN;
 		dcterms.language template languageId with Language;
-		// schema.primaryImageOfPage template bookImageId with LegacyImage;
+		schema.^encoding template imageId with SourceType LegacyImage;
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
-		wba.migrated constant "true";
-		foaf.depiction template imageId with SourceType LegacyImage;
+		wbo.migrated constant "true";
 }
 
 map BookOwners from wikibus.books {

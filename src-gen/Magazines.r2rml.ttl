@@ -1,9 +1,8 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX bibo: <http://purl.org/ontology/bibo/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX schema: <http://schema.org/>
-PREFIX wba: <https://wikibus.org/api/>
+PREFIX wbo: <https://schema.wikibus.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 <#Magazine>
@@ -19,7 +18,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "magazine/{Slug}";
-		rr:class wba:Source;
+		rr:class wbo:Source;
 		rr:class schema:Periodical;
 		rr:graphMap [
 		  rr:template "magazine/{Slug}"
@@ -41,7 +40,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate wba:issues;
+		rr:predicate wbo:issues;
 		rr:objectMap [
 			rr:template "magazine/{Slug}/issues"
 		]
@@ -84,7 +83,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "magazine/{MagazineSlug}/issue/{Id}";
-		rr:class wba:Source;
+		rr:class wbo:Source;
 		rr:graphMap [
 		  rr:template "magazine/{MagazineSlug}/issue/{Id}"
 		]
@@ -156,7 +155,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate foaf:depiction;
+		rr:predicate schema:encoding;
 		rr:objectMap [
 			rr:template "magazine/{MagazineSlug}/issue/{LegacyImage}/image"
 		]

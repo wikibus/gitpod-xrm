@@ -27,10 +27,10 @@ map FileCabinets from wikibus.cabinets {
 	  template fileCabinetId with Id;
 
 	types
-		wba.StorageContainer
+		wbo.StorageContainer
 
 	properties
 		rdfs.label from Description;
 		wbo.size from CompartmentsCount;
-		wba.compartments template "file-cabinet/{0}/compartments" with Id;
+		wbo.compartments template "file-cabinet/{0}/compartments" with Id;
 }

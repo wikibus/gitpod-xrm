@@ -7,7 +7,9 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	a rr:TriplesMap;
 	
 	rr:logicalTable [ rr:sqlQuery """
-				select i.*, s.SourceType
+				select 
+					i.*, 
+					IIF(s.SourceType = 'folder', 'brochure', s.SourceType) as SourceType
 				from [Sources].[Images] i 
 				join [Sources].[Source] s on i.SourceId = s.Id""" ];
 	
@@ -53,7 +55,9 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	a rr:TriplesMap;
 	
 	rr:logicalTable [ rr:sqlQuery """
-				select i.*, s.SourceType
+				select 
+					i.*, 
+					IIF(s.SourceType = 'folder', 'brochure', s.SourceType) as SourceType
 				from [Sources].[Images] i 
 				join [Sources].[Source] s on i.SourceId = s.Id""" ];
 	

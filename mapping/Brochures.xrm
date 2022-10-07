@@ -1,7 +1,5 @@
 output r2rml
 
-template brochureImageId "brochure/{0}/image"
-
 map Brochure from wikibus.brochures {
 	subject template brochureId with Id;
 
@@ -9,10 +7,11 @@ map Brochure from wikibus.brochures {
 		template brochureId with Id;
 
 	types
-		wba.Brochure
+		wbo.Brochure
 
 	properties
 		bibo.pages from Pages;
+		dcterms.date from Year with datatype xsd.gYear;
 		dcterms.date from YearMonth with datatype xsd.gYearMonth;
 		dcterms.date from Date with datatype xsd.date;
 		schema.containedInPlace template storageLocationId with FileCabinet FileOffset;
@@ -21,12 +20,11 @@ map Brochure from wikibus.brochures {
 		dcterms.description from Notes;
 		dcterms.identifier from FolderCode;
 		schema.contributor template userId with User;
-		schema.associatedMedia template brochurePdfId with Id;
-		foaf.depiction template imageId with SourceType LegacyImage;
-		// schema.primaryImageOfPage template brochureImageId with LegacyImage;
+		schema.associatedMedia template brochurePdfId with AssociatedMedia;
+		schema.^encoding template imageId with SourceType LegacyImage;
+		schema.^encoding template imageId with SourceType Image;
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
-		wba.wishlistItem template "wishlist/{0}" with Id;
 		schema.identifier from Id;
 }
 
@@ -43,6 +41,6 @@ map BrochureFile from wikibus.brochures_files {
 		schema.contentSize from ContentSize;
 		dcat.byteSize from ByteSize with datatype xsd.long;
 		schema.encodingFormat constant "application/pdf";
-		schema.contentUrl from ContentUrl;
+		schema.contentUrl template "https://wikibus.blob.core.windows.net/sources{0}/{1}" with Id ContentName;
 		schema.encodesCreativeWork template brochureId with Id;
 }

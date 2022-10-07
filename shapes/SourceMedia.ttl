@@ -1,0 +1,40 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix schema: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix wbo: <https://schema.wikibus.org/> .
+
+<shape/SourceMedia>
+    sh:property
+        [
+            sh:path schema:contentSize ;
+            sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:minLength 1 ;
+        ],
+        [
+            sh:path schema:contentUrl ;
+            sh:nodeKind sh:IRI ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path schema:encodesCreativeWork ;
+            sh:class wbo:Brochure ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ] ,
+        [
+            sh:path schema:encodingFormat ;
+            sh:in ("application/pdf") ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ] ,
+        [
+            sh:path dcat:byteSize ;
+            sh:datatype xsd:long ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ] ;
+.

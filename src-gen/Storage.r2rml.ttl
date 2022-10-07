@@ -1,7 +1,6 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX schema: <http://schema.org/>
-PREFIX wba: <https://wikibus.org/api/>
 PREFIX wbo: <https://schema.wikibus.org/>
 
 <#StorageLocation>
@@ -60,7 +59,7 @@ PREFIX wbo: <https://schema.wikibus.org/>
 	
 	rr:subjectMap [
 		rr:template "file-cabinet/{Id}";
-		rr:class wba:StorageContainer;
+		rr:class wbo:StorageContainer;
 		rr:graphMap [
 		  rr:template "file-cabinet/{Id}"
 		]
@@ -81,7 +80,7 @@ PREFIX wbo: <https://schema.wikibus.org/>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate wba:compartments;
+		rr:predicate wbo:compartments;
 		rr:objectMap [
 			rr:template "file-cabinet/{Id}/compartments"
 		]

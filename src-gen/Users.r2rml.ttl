@@ -1,5 +1,5 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
-PREFIX wba: <https://wikibus.org/api/>
+PREFIX wbo: <https://schema.wikibus.org/>
 
 <#User>
 	a rr:TriplesMap;
@@ -14,7 +14,7 @@ PREFIX wba: <https://wikibus.org/api/>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate wba:driveImportFolder;
+		rr:predicate wbo:driveImportFolder;
 		rr:objectMap [
 			rr:column "DriveImportFolder"
 		]
