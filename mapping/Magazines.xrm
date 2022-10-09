@@ -8,12 +8,35 @@ map Magazine from wikibus.magazines {
 
 	types
 		wbo.Source
-		schema.Periodical
 
 	properties
 		dcterms.title from Name;
 		dcterms.description from SubName;
 		wbo.issues template magazineIssues with Slug;
+}
+
+map MagazinIssueCollections from wikibus.magazines {
+	subject template magazineIssues with Slug;
+
+	graphs
+		template magazineIssues with Slug;
+
+	types
+		wbo.MagazineIssueCollection
+
+	properties
+		hydra.memberAssertion template "issue-collection-{0}-member-assersions" with Slug as BlankNode ;
+}
+
+map MagazinIssueCollectionMembersAssertions from wikibus.magazines {
+	subject template "issue-collection-{0}-member-assersions" with Slug as BlankNode ;
+
+	graphs
+		template magazineIssues with Slug;
+
+	properties
+		hydra.property constant schema.isPartOf ;
+		hydra.object template magazineId with Slug;
 }
 
 map MagazineIssue from wikibus.magazineIssues {

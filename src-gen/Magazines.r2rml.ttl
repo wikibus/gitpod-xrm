@@ -1,6 +1,7 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX bibo: <http://purl.org/ontology/bibo/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
 PREFIX schema: <http://schema.org/>
 PREFIX wbo: <https://schema.wikibus.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -19,7 +20,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:subjectMap [
 		rr:template "magazine/{Slug}";
 		rr:class wbo:Source;
-		rr:class schema:Periodical;
 		rr:graphMap [
 		  rr:template "magazine/{Slug}"
 		]
@@ -43,6 +43,66 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		rr:predicate wbo:issues;
 		rr:objectMap [
 			rr:template "magazine/{Slug}/issues"
+		]
+	].
+	
+<#MagazinIssueCollections>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """select *,
+				lower(replace(
+					replace(
+						cast(Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
+					' ', '-'),
+				'&', '-')) as Slug
+			from Sources.Magazine""" ];
+	
+	rr:subjectMap [
+		rr:template "magazine/{Slug}/issues";
+		rr:class wbo:MagazineIssueCollection;
+		rr:graphMap [
+		  rr:template "magazine/{Slug}/issues"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate hydra:memberAssertion;
+		rr:objectMap [
+			rr:template "issue-collection-{Slug}-member-assersions";
+			rr:termType rr:BlankNode
+		]
+	].
+	
+<#MagazinIssueCollectionMembersAssertions>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """select *,
+				lower(replace(
+					replace(
+						cast(Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
+					' ', '-'),
+				'&', '-')) as Slug
+			from Sources.Magazine""" ];
+	
+	rr:subjectMap [
+		rr:template "issue-collection-{Slug}-member-assersions";
+		rr:termType rr:BlankNode;
+		rr:graphMap [
+		  rr:template "magazine/{Slug}/issues"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate hydra:property;
+		rr:objectMap [
+			rr:constant schema:isPartOf
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate hydra:object;
+		rr:objectMap [
+			rr:template "magazine/{Slug}"
 		]
 	].
 	
@@ -83,7 +143,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "magazine/{MagazineSlug}/issue/{Id}";
-		rr:class wbo:Source;
+		rr:class bibo:Issue;
 		rr:graphMap [
 		  rr:template "magazine/{MagazineSlug}/issue/{Id}"
 		]

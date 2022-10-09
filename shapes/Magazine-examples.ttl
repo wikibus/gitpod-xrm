@@ -1,0 +1,54 @@
+PREFIX schema: <http://schema.org/>
+PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix wbo: <https://schema.wikibus.org/> .
+
+<shape/magazine/with-description>
+    a sh:NodeShape ;
+    sh:targetNode <https://wikibus.lndo.site/magazine/samochody-specjalne> ;
+    sh:property
+        [
+            sh:path dcterms:title ;
+            sh:hasValue "Samochody specjalne" ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path dcterms:description ;
+            sh:hasValue "kwartalnik profesjonalistów" ;
+            sh:datatype xsd:string ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path wbo:issues ;
+            sh:hasValue <https://wikibus.lndo.site/magazine/samochody-specjalne/issues> ;
+            sh:class wbo:MagazineIssueCollection ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:node
+                [
+                    sh:property
+                        [
+                            sh:path hydra:memberAssertion ;
+                            sh:node
+                                [
+                                    sh:property
+                                        [
+                                            sh:path hydra:property ;
+                                            sh:hasValue schema:isPartOf ;
+                                            sh:minCount 1 ;
+                                            sh:maxCount 1 ;
+                                        ],
+                                        [
+                                            sh:path hydra:object ;
+                                            sh:hasValue <https://wikibus.lndo.site/magazine/samochody-specjalne> ;
+                                            sh:minCount 1 ;
+                                            sh:maxCount 1 ;
+                                        ]
+                                ]
+                        ]
+                ]
+        ]
+.

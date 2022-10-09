@@ -60,7 +60,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate hydra:manages;
+		rr:predicate hydra:memberAssertion;
 		rr:objectMap [
 			rr:template "wishlist-{UserId}-manages-user";
 			rr:termType rr:BlankNode

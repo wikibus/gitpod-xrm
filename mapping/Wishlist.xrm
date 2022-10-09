@@ -26,7 +26,7 @@ map Wishlists from wikibus.users {
 
 	properties
 		acl.owner template userId with UserId;
-		hydra.manages template "wishlist-{0}-manages-user" with UserId as BlankNode;
+		hydra.memberAssertion template "wishlist-{0}-manages-user" with UserId as BlankNode;
 }
 
 map WishlistCollectionsManagesUser from wikibus.users {

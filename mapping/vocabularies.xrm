@@ -15,6 +15,7 @@ vocabulary wbo {
 		WishlistCollection
 		Wishlist
 		User
+		MagazineIssueCollection
 
 	properties
 		name
@@ -32,6 +33,7 @@ vocabulary bibo {
 
 	classes
 		Book
+		Issue
 
 	properties
 		pages
@@ -117,7 +119,7 @@ vocabulary hydra {
 		property
 		object
 		^subject
-		manages
+		memberAssertion
 }
 
 vocabulary rdf {
