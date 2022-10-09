@@ -96,7 +96,6 @@ vocabulary schema {
 		contentSize
 		contentUrl
 		thumbnail
-		owns
 		isbn
 		identifier
 		author

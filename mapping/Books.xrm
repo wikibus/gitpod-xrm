@@ -22,16 +22,6 @@ map Book from wikibus.books {
 		wbo.migrated constant "true";
 }
 
-map BookOwners from wikibus.books {
-	subject template userId with User;
-
-	graphs
-		template "user/{0}/books" with User;
-
-	properties
-		schema.owns template bookId with Id;
-}
-
 map BookAuthors from wikibus.bookAuthors {
 	subject template bookId with Id;
 
