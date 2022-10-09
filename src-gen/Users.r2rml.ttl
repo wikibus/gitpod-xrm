@@ -1,4 +1,5 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX wbo: <https://schema.wikibus.org/>
 
 <#User>
@@ -7,9 +8,10 @@ PREFIX wbo: <https://schema.wikibus.org/>
 	rr:logicalTable [ rr:sqlQuery """select rtrim([UserId]) as [UserId], DriveImportFolder from [Sources].[Users]""" ];
 	
 	rr:subjectMap [
-		rr:template "https://users.wikibus.org/user/{UserId}";
+		rr:template "user/{UserId}";
+		rr:class vcard:Individual;
 		rr:graphMap [
-		  rr:template "https://users.wikibus.org/user/{UserId}"
+		  rr:template "user/{UserId}"
 		]
 	];
 	
@@ -17,6 +19,13 @@ PREFIX wbo: <https://schema.wikibus.org/>
 		rr:predicate wbo:driveImportFolder;
 		rr:objectMap [
 			rr:column "DriveImportFolder"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate vcard:hasUID;
+		rr:objectMap [
+			rr:column "UserId"
 		]
 	].
 	

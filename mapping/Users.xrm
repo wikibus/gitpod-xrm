@@ -6,6 +6,10 @@ map User from wikibus.users {
 	graphs
 	  template userId with UserId;
 
+	types
+	  vcard.Individual
+
 	properties
 		wbo.driveImportFolder from DriveImportFolder;
+		vcard.hasUID from UserId;
 }

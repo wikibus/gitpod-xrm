@@ -118,7 +118,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:predicateObjectMap [
 		rr:predicate schema:contributor;
 		rr:objectMap [
-			rr:template "https://users.wikibus.org/user/{User}"
+			rr:template "user/{User}"
 		]
 	];
 	

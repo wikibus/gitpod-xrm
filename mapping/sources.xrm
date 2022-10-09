@@ -280,13 +280,18 @@ where SourceType = 'book'"
 	}
 
 	logical-source wishlist {
-		source query "select Id, rtrim([User]) as [User], SourceId, Done from Sources.Wishlist"
+		source query "select 
+			Id,
+			rtrim([User]) as [User],
+			SourceId,
+			IIF(Done = '1', 'Complete', 'Incomplete') as Status 
+		from Sources.Wishlist"
 
 		referenceables
 			Id
 			User
 			SourceId
-			Done
+			Status
 	}
 
 	logical-source cabinets {

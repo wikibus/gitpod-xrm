@@ -1,13 +1,18 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX acl: <http://www.w3.org/ns/auth/acl#>
-PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
+PREFIX schema: <http://schema.org/>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX wbo: <https://schema.wikibus.org/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 <#WishlistItem>
 	a rr:TriplesMap;
 	
-	rr:logicalTable [ rr:sqlQuery """select Id, rtrim([User]) as [User], SourceId, Done from Sources.Wishlist""" ];
+	rr:logicalTable [ rr:sqlQuery """select 
+				Id,
+				rtrim([User]) as [User],
+				SourceId,
+				IIF(Done = '1', 'Complete', 'Incomplete') as Status 
+			from Sources.Wishlist""" ];
 	
 	rr:subjectMap [
 		rr:template "wishlist/{User}/{SourceId}";
@@ -25,72 +30,41 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate wbo:done;
+		rr:predicate schema:status;
 		rr:objectMap [
-			rr:column "Done";
-			rr:datatype xsd:boolean
+			rr:template "https://schema.wikibus.org/wishlist-status/{Status}"
 		]
 	];
 	
 	rr:predicateObjectMap [
 		rr:predicate acl:owner;
 		rr:objectMap [
-			rr:template "https://users.wikibus.org/user/{User}"
+			rr:template "user/{User}"
 		]
 	].
 	
-<#Wishlists>
+<#WishlistUser>
 	a rr:TriplesMap;
 	
-	rr:logicalTable [ rr:sqlQuery """select rtrim([UserId]) as [UserId], DriveImportFolder from [Sources].[Users]""" ];
+	rr:logicalTable [ rr:sqlQuery """select 
+				Id,
+				rtrim([User]) as [User],
+				SourceId,
+				IIF(Done = '1', 'Complete', 'Incomplete') as Status 
+			from Sources.Wishlist""" ];
 	
 	rr:subjectMap [
-		rr:template "wishlist/{UserId}";
-		rr:class wbo:WishlistCollection;
+		rr:template "user/{User}";
+		rr:class vcard:Individual;
 		rr:graphMap [
-		  rr:template "wishlist/{UserId}"
+		  rr:template "user/{User}"
 		]
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate acl:owner;
+		rr:predicate vcard:hasUID;
 		rr:objectMap [
-			rr:template "https://users.wikibus.org/user/{UserId}"
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate hydra:memberAssertion;
-		rr:objectMap [
-			rr:template "wishlist-{UserId}-manages-user";
-			rr:termType rr:BlankNode
-		]
-	].
-	
-<#WishlistCollectionsManagesUser>
-	a rr:TriplesMap;
-	
-	rr:logicalTable [ rr:sqlQuery """select rtrim([UserId]) as [UserId], DriveImportFolder from [Sources].[Users]""" ];
-	
-	rr:subjectMap [
-		rr:template "wishlist-{UserId}-manages-user";
-		rr:termType rr:BlankNode;
-		rr:graphMap [
-		  rr:template "wishlist/{UserId}"
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate hydra:object;
-		rr:objectMap [
-			rr:template "https://users.wikibus.org/user/{UserId}"
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate hydra:property;
-		rr:objectMap [
-			rr:constant acl:owner
+			rr:column "User"
 		]
 	].
 	

@@ -105,41 +105,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		]
 	].
 	
-<#BookOwners>
-	a rr:TriplesMap;
-	
-	rr:logicalTable [ rr:sqlQuery """select
-	    Id,
-		SourceType,
-	    Pages,
-	    Year,
-	    IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
-	    BookTitle,
-	    IIF(trim(BookISBN) = '', NULL, trim(BookISBN)) as BookISBN,
-	    BookAuthor,
-	    rtrim([User]) as [User],
-		DateCreated,
-	    DateUpdated,
-	    IIF(rtrim(value) = '', NULL, value) as Language,
-	    IIF(Image is NULL, NULL, Id) as LegacyImage
-	from Sources.Source
-	         CROSS APPLY STRING_SPLIT(Languages, ';')
-	where SourceType = 'book'""" ];
-	
-	rr:subjectMap [
-		rr:template "https://users.wikibus.org/user/{User}";
-		rr:graphMap [
-		  rr:template "user/{User}/books"
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate schema:owns;
-		rr:objectMap [
-			rr:template "book/{Id}"
-		]
-	].
-	
 <#BookAuthors>
 	a rr:TriplesMap;
 	

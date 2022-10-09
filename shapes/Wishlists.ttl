@@ -1,0 +1,49 @@
+PREFIX schema: <http://schema.org/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+prefix wbo: <https://schema.wikibus.org/>
+
+<shape/whislist-item/example>
+    sh:targetNode <https://wikibus.lndo.site/wishlist/google-oauth2%7C115251664452867821291/2256> ;
+    sh:property
+        [
+            sh:path acl:owner ;
+            sh:hasValue <https://wikibus.lndo.site/user/google-oauth2%7C115251664452867821291> ;
+        ],
+        [
+            sh:path wbo:source ;
+            sh:hasValue <https://wikibus.lndo.site/brochure/2256> ;
+        ],
+        [
+            sh:path schema:status ;
+            sh:hasValue wbo:wishlist-status\/Complete ;
+        ]
+.
+
+<shape/whislist-item>
+    sh:targetClass wbo:WishlistItem ;
+    sh:property
+        [
+            sh:path acl:owner ;
+            sh:class vcard:Individual ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path wbo:source ;
+            sh:nodeKind sh:IRI ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path schema:status ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:in
+                (
+                    wbo:wishlist-status\/Complete
+                    wbo:wishlist-status\/Incomplete
+                ) ;
+        ]
+.

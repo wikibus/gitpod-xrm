@@ -11,31 +11,19 @@ map WishlistItem from wikibus.wishlist {
 
 	properties
 		wbo.^source template brochureId with SourceId;
-		wbo.done from Done with datatype xsd.boolean;
+		schema.status template "https://schema.wikibus.org/wishlist-status/{0}" with Status;
 		acl.owner template userId with User;
 }
 
-map Wishlists from wikibus.users {
-	subject template wishlistCollectionId with UserId;
-	
+map WishlistUser from wikibus.wishlist {
+	subject template userId with User;
+
 	graphs
-	  template wishlistCollectionId with UserId;
+		template userId with User;
 
 	types
-		wbo.WishlistCollection
+		vcard.Individual
 
 	properties
-		acl.owner template userId with UserId;
-		hydra.memberAssertion template "wishlist-{0}-manages-user" with UserId as BlankNode;
-}
-
-map WishlistCollectionsManagesUser from wikibus.users {
-	subject template "wishlist-{0}-manages-user" with UserId as BlankNode;
-	
-	graphs
-	  template wishlistCollectionId with UserId;
-
-	properties
-		hydra.object template userId with UserId;
-		hydra.property constant acl.owner;
+		vcard.hasUID from User;
 }

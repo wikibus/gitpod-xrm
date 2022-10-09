@@ -1,0 +1,33 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
+prefix wbo: <https://schema.wikibus.org/>
+
+<shape/user>
+    sh:targetClass vcard:Individual ;
+    sh:property
+        [
+            sh:path wbo:driveImportFolder ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:string ;
+        ],
+        [
+            sh:path vcard:hasUID ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:string ;
+        ] ;
+.
+
+<shape/user/tomasz-pluskiewicz>
+    sh:targetNode <https://wikibus.lndo.site/user/google-oauth2%7C102469142200181834275> ;
+    sh:property
+        [
+            sh:path wbo:driveImportFolder ;
+            sh:hasValue "1GOobaqFA0rtGIJspcG2VQBs_4JLyTxOW" ;
+        ],
+        [
+            sh:path vcard:hasUID ;
+            sh:hasValue "google-oauth2|102469142200181834275" ;
+        ] ;
+.

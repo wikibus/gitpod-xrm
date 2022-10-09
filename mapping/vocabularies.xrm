@@ -11,7 +11,6 @@ vocabulary wbo {
 		WishlistItem
 		StorageLocation
 		StorageContainer
-		WishlistCollection
 		Wishlist
 		User
 		IssueCollection
@@ -19,7 +18,6 @@ vocabulary wbo {
 	properties
 		name
 		^source
-		done
 		driveImportFolder
 		issues
 		migrated
@@ -104,6 +102,7 @@ vocabulary schema {
 		containedInPlace
 		encodesCreativeWork
 		^encoding
+		status
 }
 
 vocabulary hydra {
@@ -138,4 +137,14 @@ vocabulary acl {
 
 	properties
 		owner
+}
+
+vocabulary vcard {
+	prefix "vcard" "http://www.w3.org/2006/vcard/ns#"
+
+	classes
+		Individual
+
+	properties
+		hasUID
 }
