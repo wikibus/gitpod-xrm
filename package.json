@@ -4,7 +4,6 @@
   "scripts": {
     "prestart": "mkdir -p out",
     "start": "dotenv -c local -- npm run transform",
-    "transform-sparql": "r2rml4net rml -c \"$SQL_CONNECTION\" -m ./src-gen -b https://wikibus-sources.lndo.site/ -e http://wikibus-store.lndo.site/wikibus/update --user test --pass password",
     "transform": "r2rml4net rml -c \"$SQL_CONNECTION\" -m ./src-gen -b $BASE -o ./out/wikibus.trig",
     "posttransform": "yarn validate",
     "validate": "shacl-cli validate --shapes shapes/*.ttl --data out/wikibus.trig --prefixes wbo=https://schema.wikibus.org/ bibo xsd dcterms dtype schema rdfs hydra dcat acl > out/report.ttl"
