@@ -6,6 +6,9 @@ map StorageLocation from wikibus.sources {
 	graphs
 	  template fileCabinetId with FileCabinet;
 
+	types
+		wbo.StorageLocation
+
 	properties
 		rdfs.label template "{0} ({1})" with FileCabinetName FileOffset as Literal;
 }
@@ -17,7 +20,7 @@ map CabinetParts from wikibus.sources {
 	  template fileCabinetId with FileCabinet;
 
 	properties
-		schema.hasPart template storageLocationId with FileCabinet FileOffset;
+		schema.containsPlace template storageLocationId with FileCabinet FileOffset;
 }
 
 map FileCabinets from wikibus.cabinets {
@@ -31,6 +34,4 @@ map FileCabinets from wikibus.cabinets {
 
 	properties
 		rdfs.label from Description;
-		wbo.size from CompartmentsCount;
-		wbo.compartments template "file-cabinet/{0}/compartments" with Id;
 }

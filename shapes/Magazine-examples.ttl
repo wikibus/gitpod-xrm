@@ -77,7 +77,7 @@ PREFIX bibo: <http://purl.org/ontology/bibo/>
         ],
         [
             sh:path schema:containedInPlace ;
-            sh:hasValue <https://wikibus.lndo.site/file-cabinet/10/8> ;
+            sh:hasValue <https://wikibus.lndo.site/file-cabinet/10#8> ;
         ],
         [
             sh:path dcterms:created ;

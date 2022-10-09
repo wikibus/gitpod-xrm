@@ -20,10 +20,8 @@ vocabulary wbo {
 		name
 		^source
 		done
-		size
 		driveImportFolder
 		issues
-		compartments
 		migrated
 }
 
@@ -103,7 +101,7 @@ vocabulary schema {
 		identifier
 		author
 		isPartOf
-		hasPart
+		containsPlace
 		containedInPlace
 		encodesCreativeWork
 		^encoding

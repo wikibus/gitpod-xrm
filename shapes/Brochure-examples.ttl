@@ -62,7 +62,7 @@
         ],
         [
             sh:path schema:containedInPlace ;
-            sh:hasValue <https://wikibus.lndo.site/file-cabinet/83/2> ;
+            sh:hasValue <https://wikibus.lndo.site/file-cabinet/83#2> ;
         ],
         [
             sh:path schema:contributor ;

@@ -58,7 +58,7 @@
             sh:path schema:containedInPlace ;
             sh:nodeKind sh:IRI ;
             sh:maxCount 1 ;
-            sh:node <shape/Location> ;
+            sh:class wbo:StorageLocation ;
         ],
         [
             sh:path schema:contributor ;

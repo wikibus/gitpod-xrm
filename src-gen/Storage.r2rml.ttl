@@ -14,7 +14,8 @@ PREFIX wbo: <https://schema.wikibus.org/>
 	        join Priv.FileCabinet fc on fc.Id = s.FileCabinet""" ];
 	
 	rr:subjectMap [
-		rr:template "file-cabinet/{FileCabinet}/{FileOffset}";
+		rr:template "file-cabinet/{FileCabinet}#{FileOffset}";
+		rr:class wbo:StorageLocation;
 		rr:graphMap [
 		  rr:template "file-cabinet/{FileCabinet}"
 		]
@@ -46,9 +47,9 @@ PREFIX wbo: <https://schema.wikibus.org/>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate schema:hasPart;
+		rr:predicate schema:containsPlace;
 		rr:objectMap [
-			rr:template "file-cabinet/{FileCabinet}/{FileOffset}"
+			rr:template "file-cabinet/{FileCabinet}#{FileOffset}"
 		]
 	].
 	
@@ -69,20 +70,6 @@ PREFIX wbo: <https://schema.wikibus.org/>
 		rr:predicate rdfs:label;
 		rr:objectMap [
 			rr:column "Description"
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate wbo:size;
-		rr:objectMap [
-			rr:column "CompartmentsCount"
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate wbo:compartments;
-		rr:objectMap [
-			rr:template "file-cabinet/{Id}/compartments"
 		]
 	].
 	

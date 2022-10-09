@@ -1,0 +1,79 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <http://schema.org/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+prefix wbo: <https://schema.wikibus.org/>
+
+<shape/storage-container>
+    sh:targetClass wbo:StorageContainer ;
+    sh:property
+        [
+            sh:path schema:containsPlace ;
+            sh:class wbo:StorageLocation ;
+        ],
+        [
+            sh:path rdfs:label ;
+            sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ] ;
+.
+
+<shape/storage-location>
+    sh:targetClass wbo:StorageLocation ;
+    sh:property
+        [
+            sh:path [ sh:inversePath schema:containsPlace ] ;
+            sh:class wbo:StorageContainer ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+        ],
+        [
+            sh:path rdfs:label ;
+            sh:datatype xsd:string ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:pattern "^.+ \\(\\d+\\)$" ;
+        ] ;
+.
+
+<shape/storage-container/10>
+    sh:targetNode <https://wikibus.lndo.site/file-cabinet/10> ;
+    sh:property
+        [
+            sh:path schema:containsPlace ;
+            sh:in
+                (
+                    <https://wikibus.lndo.site/file-cabinet/10#0>
+                    <https://wikibus.lndo.site/file-cabinet/10#1>
+                    <https://wikibus.lndo.site/file-cabinet/10#10>
+                    <https://wikibus.lndo.site/file-cabinet/10#11>
+                    <https://wikibus.lndo.site/file-cabinet/10#12>
+                    <https://wikibus.lndo.site/file-cabinet/10#13>
+                    <https://wikibus.lndo.site/file-cabinet/10#14>
+                    <https://wikibus.lndo.site/file-cabinet/10#15>
+                    <https://wikibus.lndo.site/file-cabinet/10#16>
+                    <https://wikibus.lndo.site/file-cabinet/10#2>
+                    <https://wikibus.lndo.site/file-cabinet/10#3>
+                    <https://wikibus.lndo.site/file-cabinet/10#4>
+                    <https://wikibus.lndo.site/file-cabinet/10#5>
+                    <https://wikibus.lndo.site/file-cabinet/10#6>
+                    <https://wikibus.lndo.site/file-cabinet/10#7>
+                    <https://wikibus.lndo.site/file-cabinet/10#8>
+                    <https://wikibus.lndo.site/file-cabinet/10#9>
+                ) ;
+        ],
+        [
+            sh:path rdfs:label ;
+            sh:hasValue "Czarny duży folder" ;
+        ] ;
+.
+
+<shape/storage-container/10-10>
+    sh:targetNode <https://wikibus.lndo.site/file-cabinet/10#10> ;
+    sh:property
+        [
+            sh:path rdfs:label ;
+            sh:hasValue "Czarny duży folder (10)" ;
+        ] ;
+.
