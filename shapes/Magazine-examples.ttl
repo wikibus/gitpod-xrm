@@ -1,5 +1,6 @@
 PREFIX schema: <http://schema.org/>
 PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
+PREFIX bibo: <http://purl.org/ontology/bibo/>
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
@@ -24,7 +25,7 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
         [
             sh:path wbo:issues ;
             sh:hasValue <https://wikibus.lndo.site/magazine/samochody-specjalne/issues> ;
-            sh:class wbo:MagazineIssueCollection ;
+            sh:class wbo:IssueCollection ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:node
@@ -51,4 +52,43 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
                         ]
                 ]
         ]
+.
+
+<shape/magazine-issue/example>
+    sh:targetNode <https://wikibus.lndo.site/magazine/motor/issue/353> ;
+    sh:property
+        [
+            sh:path bibo:issue ;
+            sh:hasValue 409 ;
+        ],
+        [
+            sh:path bibo:pages ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:integer ;
+        ],
+        [
+            sh:path dcterms:date ;
+            sh:hasValue "1960-02-28"^^xsd:date ;
+        ],
+        [
+            sh:path schema:isPartOf ;
+            sh:hasValue <https://wikibus.lndo.site/magazine/motor> ;
+        ],
+        [
+            sh:path schema:containedInPlace ;
+            sh:hasValue <https://wikibus.lndo.site/file-cabinet/10/8> ;
+        ],
+        [
+            sh:path dcterms:created ;
+            sh:hasValue "2020-08-22T21:15:44"^^xsd:dateTime ;
+        ] ,
+        [
+            sh:path dcterms:modified ;
+            sh:hasValue "2021-04-11T14:37:02"^^xsd:dateTime;
+        ] ,
+        [
+            sh:path schema:encoding ;
+            sh:hasValue <https://wikibus.lndo.site/magazine/motor/issue/353/image> ;
+        ] ;
 .

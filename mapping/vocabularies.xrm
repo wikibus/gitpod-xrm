@@ -8,14 +8,13 @@ vocabulary wbo {
 	classes
 		Book
 		Brochure
-		Source
 		WishlistItem
 		StorageLocation
 		StorageContainer
 		WishlistCollection
 		Wishlist
 		User
-		MagazineIssueCollection
+		IssueCollection
 
 	properties
 		name
@@ -34,6 +33,7 @@ vocabulary bibo {
 	classes
 		Book
 		Issue
+		Periodical
 
 	properties
 		pages

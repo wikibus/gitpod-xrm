@@ -1,3 +1,4 @@
+PREFIX bibo: <http://purl.org/ontology/bibo/>
 PREFIX schema: <http://schema.org/>
 PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
@@ -7,7 +8,7 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
 
 <shape/magazine>
     a sh:NodeShape ;
-    sh:targetClass wbo:Magazine ;
+    sh:targetClass wbo:Periodical ;
     sh:property
         [
             sh:path dcterms:title ;
@@ -23,17 +24,13 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
         [
             sh:path wbo:issues ;
             sh:nodeKind sh:IRI ;
-            sh:class wbo:MagazineIssueCollection ;
+            sh:class wbo:IssueCollection ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:node
                 [
-                    sh:property
-                        [
-                            sh:path hydra:memberAssertion ;
-                            sh:node <shape/magazine-issues-member-assertions> ;
-                            sh:nodeKind sh:BlankNode ;
-                        ] ;
+                    sh:property hydra:memberAssertion ;
+                    sh:node <shape/magazine-issues-member-assertions> ;
                 ]
         ]
 .
@@ -47,10 +44,67 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
             sh:maxCount 1 ;
         ],
         [
-            sh:path hydra:object ;
+            sh:path hydra:property ;
             sh:nodeKind sh:IRI ;
-            sh:class wbo:Periodical ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
         ];
+.
+
+<shape/magazine-issue>
+    sh:targetClass bibo:Issue ;
+    sh:property
+        [
+            sh:path bibo:issue ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:integer ;
+        ],
+        [
+            sh:path dcterms:date ;
+            sh:xone
+                (
+                    [ sh:datatype xsd:gYearMonth ]
+                    [ sh:datatype xsd:date ]
+                )
+        ],
+        [
+            sh:path bibo:pages ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:integer ;
+        ],
+        [
+            sh:path schema:isPartOf ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:class bibo:Periodical ;
+        ],
+        [
+            sh:path schema:containedInPlace ;
+            sh:maxCount 1 ;
+            sh:node 
+            [
+                sh:property
+                [
+                    sh:path [ sh:inversePath schema:hasPart ] ;
+                    sh:class wbo:StorageContainer ;
+                ] ;
+            ] ;
+        ],
+        [
+            sh:path dcterms:created ;
+            sh:minCount 1 ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:dateTime ;
+        ] ,
+        [
+            sh:path dcterms:modified ;
+            sh:maxCount 1 ;
+            sh:datatype xsd:dateTime ;
+        ],
+        [
+            sh:path schema:encoding ;
+            sh:maxCount 1 ;
+            sh:class schema:ImageObject ;
+        ] ;
 .

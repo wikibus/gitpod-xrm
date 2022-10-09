@@ -7,7 +7,7 @@ map Magazine from wikibus.magazines {
 	  template magazineId with Slug;
 
 	types
-		wbo.Source
+		bibo.Periodical
 
 	properties
 		dcterms.title from Name;
@@ -22,7 +22,7 @@ map MagazinIssueCollections from wikibus.magazines {
 		template magazineIssues with Slug;
 
 	types
-		wbo.MagazineIssueCollection
+		wbo.IssueCollection
 
 	properties
 		hydra.memberAssertion template "issue-collection-{0}-member-assersions" with Slug as BlankNode ;
@@ -46,7 +46,7 @@ map MagazineIssue from wikibus.magazineIssues {
 	  template magazineIssueId with MagazineSlug Id;
 
 	types
-		wbo.Source
+		bibo.Issue
 
 	properties
 		bibo.pages from Pages;
@@ -54,7 +54,6 @@ map MagazineIssue from wikibus.magazineIssues {
 		dcterms.date from Date with datatype xsd.date;
 		schema.containedInPlace template storageLocationId with FileCabinet FileOffset;
 		schema.isPartOf template magazineId with MagazineSlug;
-		schema.contributor template userId with User;
 		bibo.issue from MagIssueNumber;
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;

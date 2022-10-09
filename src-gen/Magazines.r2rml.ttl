@@ -19,7 +19,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "magazine/{Slug}";
-		rr:class wbo:Source;
+		rr:class bibo:Periodical;
 		rr:graphMap [
 		  rr:template "magazine/{Slug}"
 		]
@@ -59,7 +59,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "magazine/{Slug}/issues";
-		rr:class wbo:MagazineIssueCollection;
+		rr:class wbo:IssueCollection;
 		rr:graphMap [
 		  rr:template "magazine/{Slug}/issues"
 		]
@@ -183,13 +183,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		rr:predicate schema:isPartOf;
 		rr:objectMap [
 			rr:template "magazine/{MagazineSlug}"
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate schema:contributor;
-		rr:objectMap [
-			rr:template "https://users.wikibus.org/user/{User}"
 		]
 	];
 	
