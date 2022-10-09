@@ -28,7 +28,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "book/{Id}";
-		rr:class wbo:Book;
+		rr:class bibo:Book;
 		rr:graphMap [
 		  rr:template "book/{Id}"
 		]

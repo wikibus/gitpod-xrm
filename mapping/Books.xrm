@@ -7,7 +7,7 @@ map Book from wikibus.books {
 		template bookId with Id;
 
 	types
-		wbo.Book
+		bibo.Book
 
 	properties
 		bibo.pages from Pages;

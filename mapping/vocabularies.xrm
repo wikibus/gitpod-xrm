@@ -6,13 +6,11 @@ vocabulary wbo {
 	prefix "wbo" "https://schema.wikibus.org/"
 
 	classes
-		Book
 		Brochure
 		WishlistItem
 		StorageLocation
 		StorageContainer
 		Wishlist
-		User
 		IssueCollection
 
 	properties
