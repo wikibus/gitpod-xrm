@@ -88,7 +88,7 @@ PREFIX bibo: <http://purl.org/ontology/bibo/>
             sh:hasValue "2021-04-11T14:37:02"^^xsd:dateTime;
         ] ,
         [
-            sh:path schema:encoding ;
+            sh:path schema:image ;
             sh:hasValue <https://wikibus.lndo.site/magazine/motor/issue/353/image> ;
         ] ;
 .

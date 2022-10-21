@@ -208,7 +208,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate schema:encoding;
+		rr:predicate schema:image;
 		rr:objectMap [
 			rr:template "magazine/{MagazineSlug}/issue/{LegacyImage}/image"
 		]

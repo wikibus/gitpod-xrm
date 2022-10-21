@@ -57,5 +57,5 @@ map MagazineIssue from wikibus.magazineIssues {
 		bibo.issue from MagIssueNumber;
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
-		schema.^encoding template magazineIssueImageId with MagazineSlug LegacyImage;
+		schema.image template magazineIssueImageId with MagazineSlug LegacyImage;
 }

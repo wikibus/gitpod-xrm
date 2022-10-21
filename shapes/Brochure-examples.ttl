@@ -1,6 +1,6 @@
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix schema: <http://schema.org/> .
-@prefix lang: <http://lexvo.org/id/iso639-1/> .
+@prefix lang: <http://id.loc.gov/vocabulary/iso639-1/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
@@ -66,14 +66,14 @@
         ],
         [
             sh:path schema:contributor ;
-            sh:hasValue <https://users.wikibus.org/user/google-oauth2%7C117957693005245427833> ;
+            sh:hasValue <https://wikibus.lndo.site/user/google-oauth2%7C117957693005245427833> ;
         ],
         [
             sh:path schema:identifier ;
             sh:value 4832 ;
         ],
         [
-            sh:path schema:encoding ;
+            sh:path schema:image ;
             sh:hasValue <https://wikibus.lndo.site/image/brochure-wikibus%20library%2Fbrochures%2Fifatzmg81pwm1dbnmj3l> ;
         ]
 .

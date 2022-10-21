@@ -96,7 +96,7 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
             sh:datatype xsd:dateTime ;
         ],
         [
-            sh:path schema:encoding ;
+            sh:path schema:image ;
             sh:maxCount 1 ;
             sh:class schema:ImageObject ;
         ] ;

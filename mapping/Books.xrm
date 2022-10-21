@@ -16,7 +16,7 @@ map Book from wikibus.books {
 		dcterms.title from BookTitle;
 		schema.isbn from BookISBN;
 		dcterms.language template languageId with Language;
-		schema.^encoding template imageId with SourceType LegacyImage;
+		schema.image template imageId with SourceType LegacyImage;
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
 		wbo.migrated constant "true";

@@ -32,7 +32,7 @@
 .
 
 <shape/Book#depiction>
-    sh:path schema:encoding ;
+    sh:path schema:image ;
     sh:maxCount 1 ;
     sh:node <shape/Image> ;
 .

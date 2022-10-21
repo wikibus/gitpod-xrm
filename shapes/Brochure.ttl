@@ -68,7 +68,7 @@
             sh:node <shape/Contributor> ;
         ],
         [
-            sh:path schema:encoding ;
+            sh:path schema:image ;
             sh:nodeKind sh:IRI ;
             sh:node <shape/Image> ;
         ],

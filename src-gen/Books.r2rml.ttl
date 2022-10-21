@@ -73,12 +73,12 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:predicateObjectMap [
 		rr:predicate dcterms:language;
 		rr:objectMap [
-			rr:template "http://lexvo.org/id/iso639-1/{Language}"
+			rr:template "http://id.loc.gov/vocabulary/iso639-1/{Language}"
 		]
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate schema:encoding;
+		rr:predicate schema:image;
 		rr:objectMap [
 			rr:template "image/{SourceType}-{LegacyImage}"
 		]

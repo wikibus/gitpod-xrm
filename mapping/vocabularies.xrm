@@ -99,7 +99,7 @@ vocabulary schema {
 		containsPlace
 		containedInPlace
 		encodesCreativeWork
-		^encoding
+		image
 		status
 }
 
