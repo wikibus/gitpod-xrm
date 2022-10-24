@@ -25,7 +25,7 @@ PREFIX bibo: <http://purl.org/ontology/bibo/>
         [
             sh:path wbo:issues ;
             sh:hasValue <https://wikibus.lndo.site/magazine/samochody-specjalne/issues> ;
-            sh:class wbo:IssueCollection ;
+            sh:class <https://wikibus.org/api/IssueCollection> ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:node

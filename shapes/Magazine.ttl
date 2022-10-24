@@ -24,7 +24,7 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
         [
             sh:path wbo:issues ;
             sh:nodeKind sh:IRI ;
-            sh:class wbo:IssueCollection ;
+            sh:class <https://wikibus.org/api/IssueCollection> ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:node
@@ -82,7 +82,7 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
         [
             sh:path schema:containedInPlace ;
             sh:maxCount 1 ;
-            sh:class wbo:StorageLocation ;
+            sh:class <https://wikibus.org/api/StorageLocation> ;
         ],
         [
             sh:path dcterms:created ;

@@ -21,7 +21,7 @@
         ],
         [
             sh:path schema:encodesCreativeWork ;
-            sh:class wbo:Brochure ;
+            sh:class <https://wikibus.org/api/Brochure> ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
         ] ,

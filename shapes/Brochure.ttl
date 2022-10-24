@@ -58,7 +58,7 @@
             sh:path schema:containedInPlace ;
             sh:nodeKind sh:IRI ;
             sh:maxCount 1 ;
-            sh:class wbo:StorageLocation ;
+            sh:class <https://wikibus.org/api/StorageLocation> ;
         ],
         [
             sh:path schema:contributor ;
