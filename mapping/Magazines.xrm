@@ -51,7 +51,16 @@ map MagazineIssue from wikibus.magazineIssues {
 		schema.containedInPlace template storageLocationId with FileCabinet FileOffset;
 		schema.isPartOf template magazineId with MagazineSlug;
 		bibo.issue from MagIssueNumber;
+		schema.image template magazineIssueImageId with MagazineSlug LegacyImage;
+}
+
+map MagazineIssueGenerated from wikibus.magazineIssues {
+	subject template magazineIssueId with MagazineSlug Id;
+
+	graphs
+	  template magazineIssueGenerated with MagazineSlug Id;
+
+	properties
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
-		schema.image template magazineIssueImageId with MagazineSlug LegacyImage;
 }

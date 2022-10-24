@@ -21,9 +21,19 @@ map Brochure from wikibus.brochures {
 		schema.associatedMedia template brochurePdfId with AssociatedMedia;
 		schema.image template imageId with SourceType LegacyImage;
 		schema.image template imageId with SourceType Image;
+		schema.identifier from Id;
+}
+
+map BrochureGenerated from wikibus.brochures {
+	subject template brochureId with Id;
+
+	graphs
+		template brochureGenerated with Id;
+
+	properties
 		dcterms.created from DateCreated;
 		dcterms.modified from DateUpdated;
-		schema.identifier from Id;
+		wbo.migrated constant "true";
 }
 
 map BrochureFile from wikibus.brochures_files {

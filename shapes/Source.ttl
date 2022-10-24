@@ -1,0 +1,12 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix wbo: <https://schema.wikibus.org/> .
+
+<shape/Source>
+    sh:targetClass <https://wikibus.org/api/Book> ;
+    sh:targetClass <https://wikibus.org/api/Brochure> ;
+    sh:property
+        [
+            sh:path wbo:migrated ;
+            sh:hasValue "true" ;
+        ] ;
+.
