@@ -8,7 +8,7 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
 
 <shape/magazine>
     a sh:NodeShape ;
-    sh:targetClass wbo:Periodical ;
+    sh:targetClass <https://wikibus.org/api/Periodical> ;
     sh:property
         [
             sh:path dcterms:title ;

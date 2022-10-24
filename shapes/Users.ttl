@@ -4,7 +4,7 @@ PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 prefix wbo: <https://schema.wikibus.org/>
 
 <shape/user>
-    sh:targetClass vcard:Individual ;
+    sh:targetClass <https://wikibus.org/api/User> ;
     sh:property
         [
             sh:path wbo:driveImportFolder ;

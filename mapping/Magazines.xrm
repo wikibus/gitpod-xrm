@@ -6,10 +6,8 @@ map Magazine from wikibus.magazines {
 	graphs
 	  template magazineId with Slug;
 
-	types
-		bibo.Periodical
-
 	properties
+	    rdf.^type template "api/Periodical" ;
 		dcterms.title from Name;
 		dcterms.description from SubName;
 		wbo.issues template magazineIssues with Slug;
@@ -21,10 +19,8 @@ map MagazinIssueCollections from wikibus.magazines {
 	graphs
 		template magazineIssues with Slug;
 
-	types
-		wbo.IssueCollection
-
 	properties
+	    rdf.^type template "api/IssueCollection" ;
 		hydra.memberAssertion template "issue-collection-{0}-member-assersions" with Slug as BlankNode ;
 }
 

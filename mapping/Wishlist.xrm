@@ -6,10 +6,8 @@ map WishlistItem from wikibus.wishlist {
 	graphs
 	  template wishlistItemId with User SourceId;
 
-	types
-		wbo.WishlistItem
-
 	properties
+	    rdf.^type template "api/WishlistItem" ;
 		wbo.^source template brochureId with SourceId;
 		schema.status template "https://schema.wikibus.org/wishlist-status/{0}" with Status;
 		acl.owner template userId with User;

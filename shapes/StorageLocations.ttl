@@ -5,11 +5,11 @@ PREFIX sh: <http://www.w3.org/ns/shacl#>
 prefix wbo: <https://schema.wikibus.org/>
 
 <shape/storage-container>
-    sh:targetClass wbo:StorageContainer ;
+    sh:targetClass <https://wikibus.org/api/StorageContainer> ;
     sh:property
         [
             sh:path schema:containsPlace ;
-            sh:class wbo:StorageLocation ;
+            sh:class <https://wikibus.org/api/StorageLocation> ;
         ],
         [
             sh:path rdfs:label ;
@@ -20,11 +20,11 @@ prefix wbo: <https://schema.wikibus.org/>
 .
 
 <shape/storage-location>
-    sh:targetClass wbo:StorageLocation ;
+    sh:targetClass <https://wikibus.org/api/StorageLocation> ;
     sh:property
         [
             sh:path [ sh:inversePath schema:containsPlace ] ;
-            sh:class wbo:StorageContainer ;
+            sh:class <https://wikibus.org/api/StorageContainer> ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
         ],

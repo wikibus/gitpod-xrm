@@ -6,10 +6,8 @@ map Brochure from wikibus.brochures {
 	graphs
 		template brochureId with Id;
 
-	types
-		wbo.Brochure
-
 	properties
+	    rdf.^type template "api/Brochure" ;
 		bibo.pages from Pages;
 		dcterms.date from Year with datatype xsd.gYear;
 		dcterms.date from YearMonth with datatype xsd.gYearMonth;

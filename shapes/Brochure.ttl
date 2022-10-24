@@ -7,7 +7,7 @@
 @prefix wbo: <https://schema.wikibus.org/> .
 
 <shape/Brochure>
-    sh:targetClass wbo:Brochure ;
+    sh:targetClass <https://wikibus.org/api/Brochure> ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) ;
     sh:property

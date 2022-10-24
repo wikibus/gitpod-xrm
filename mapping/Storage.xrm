@@ -6,10 +6,8 @@ map StorageLocation from wikibus.sources {
 	graphs
 	  template fileCabinetId with FileCabinet;
 
-	types
-		wbo.StorageLocation
-
 	properties
+	    rdf.^type template "api/StorageLocation" ;
 		rdfs.label template "{0} ({1})" with FileCabinetName FileOffset as Literal;
 }
 

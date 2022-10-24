@@ -5,6 +5,7 @@
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix wbo: <https://schema.wikibus.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 <shape/book/2442>
     a sh:NodeShape ;
@@ -15,6 +16,10 @@
             sh:hasValue 56 ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
+        ],
+        [
+            sh:path rdf:type ;
+            sh:hasValue <https://wikibus.lndo.site/api/Book> ;
         ],
         [
             sh:path dcterms:date ;

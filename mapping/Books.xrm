@@ -6,10 +6,8 @@ map Book from wikibus.books {
 	graphs
 		template bookId with Id;
 
-	types
-		bibo.Book
-
 	properties
+	    rdf.^type template "api/Book" ;
 		bibo.pages from Pages;
 		dcterms.date from Year with datatype xsd.gYear;
 		dcterms.description from Notes;

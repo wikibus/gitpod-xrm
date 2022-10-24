@@ -22,7 +22,7 @@ prefix wbo: <https://schema.wikibus.org/>
 .
 
 <shape/whislist-item>
-    sh:targetClass wbo:WishlistItem ;
+    sh:targetClass <https://wikibus.org/api/WishlistItem> ;
     sh:property
         [
             sh:path acl:owner ;
