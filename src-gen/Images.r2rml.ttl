@@ -31,7 +31,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:predicateObjectMap [
 		rr:predicate schema:contentUrl;
 		rr:objectMap [
-			rr:template "https://res.cloudinary.com/dytcmwide/image/upload/t_default_downsize/v1599422851/{ExternalId}.jpg"
+			rr:column "OriginalUrl";
+			rr:termType rr:IRI
 		]
 	];
 	
@@ -72,7 +73,8 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:predicateObjectMap [
 		rr:predicate schema:contentUrl;
 		rr:objectMap [
-			rr:template "https://res.cloudinary.com/dytcmwide/image/upload/t_media_lib_thumb/v1599422851/{ExternalId}.jpg"
+			rr:column "ThumbnailUrl";
+			rr:termType rr:IRI
 		]
 	].
 	

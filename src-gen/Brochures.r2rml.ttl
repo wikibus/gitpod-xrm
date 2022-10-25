@@ -2,6 +2,7 @@ PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX bibo: <http://purl.org/ontology/bibo/>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX schema: <http://schema.org/>
 PREFIX wbo: <https://schema.wikibus.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -43,9 +44,15 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "brochure/{Id}";
-		rr:class wbo:Brochure;
 		rr:graphMap [
 		  rr:template "brochure/{Id}"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate rdf:type;
+		rr:objectMap [
+			rr:template "api/Brochure"
 		]
 	];
 	
@@ -144,6 +151,55 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
+		rr:predicate schema:identifier;
+		rr:objectMap [
+			rr:column "Id"
+		]
+	].
+	
+<#BrochureGenerated>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """select
+				s.Id,
+				'brochure' as SourceType,
+				Pages,
+				IIF(rtrim(Notes) = '', NULL, Notes) as Notes,
+				FileCabinet,
+				FileOffset,
+				FolderCode,
+				FolderName,
+				rtrim([User]) as [User],
+				DateCreated,
+				DateUpdated,
+				IIF(rtrim(value) = '', NULL, value) as Language,
+				IIF(Image is NULL, NULL, s.Id) as LegacyImage,
+				IIF(Day is null and Month is null, Year, NULL) as Year,
+				IIF(
+					Day is not null and Month is not null and Year is not null,
+					CONCAT(format(Year, '0000'), '-', format(month, '00'), '-', format(Day, '00')),
+					NULL
+				) as Date,
+				IIF(
+					Day is null and Month is not null and Year is not null,
+					CONCAT(format(Year, '0000'), '-', format(month, '00')),
+					NULL
+				) as YearMonth,
+				i.ExternalId as Image,
+				IIF(ContentUrl is NULL, NULL, s.Id) as AssociatedMedia			
+			from Sources.Source s
+			left join Sources.Images i on i.SourceId = s.Id
+			CROSS APPLY STRING_SPLIT(Languages, ';')
+			where SourceType = 'folder'""" ];
+	
+	rr:subjectMap [
+		rr:template "brochure/{Id}";
+		rr:graphMap [
+		  rr:template "brochure/{Id}#generated"
+		]
+	];
+	
+	rr:predicateObjectMap [
 		rr:predicate dcterms:created;
 		rr:objectMap [
 			rr:column "DateCreated"
@@ -158,9 +214,9 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
-		rr:predicate schema:identifier;
+		rr:predicate wbo:migrated;
 		rr:objectMap [
-			rr:column "Id"
+			rr:constant "true"
 		]
 	].
 	

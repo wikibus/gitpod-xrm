@@ -2,6 +2,7 @@ PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX bibo: <http://purl.org/ontology/bibo/>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX schema: <http://schema.org/>
 PREFIX wbo: <https://schema.wikibus.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
@@ -19,9 +20,15 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "magazine/{Slug}";
-		rr:class bibo:Periodical;
 		rr:graphMap [
 		  rr:template "magazine/{Slug}"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate rdf:type;
+		rr:objectMap [
+			rr:template "api/Periodical"
 		]
 	];
 	
@@ -59,9 +66,15 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	
 	rr:subjectMap [
 		rr:template "magazine/{Slug}/issues";
-		rr:class wbo:IssueCollection;
 		rr:graphMap [
 		  rr:template "magazine/{Slug}/issues"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate rdf:type;
+		rr:objectMap [
+			rr:template "api/IssueCollection"
 		]
 	];
 	
@@ -194,6 +207,55 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	];
 	
 	rr:predicateObjectMap [
+		rr:predicate schema:image;
+		rr:objectMap [
+			rr:template "magazine/{MagazineSlug}/issue/{LegacyImage}/image"
+		]
+	].
+	
+<#MagazineIssueGenerated>
+	a rr:TriplesMap;
+	
+	rr:logicalTable [ rr:sqlQuery """select
+				s.Id,
+				s.Pages,
+				IIF(rtrim(Notes) = '', NULL, s.Notes) as Notes,
+				s.FileCabinet,
+				s.FileOffset,
+				s.MagIssueNumber,
+				rtrim(s.[User]) as [User],
+				DateCreated,
+				DateUpdated,
+				IIF(rtrim(value) = '', NULL, value) as Language,
+				IIF(s.Image is NULL, NULL, s.Id) as LegacyImage,
+				IIF(
+					Day is not null and Month is not null and Year is not null,
+					CONCAT(format(Year, '0000'), '-', format(month, '00'), '-', format(Day, '00')),
+					NULL
+				) as Date,
+				IIF(
+					Day is null and Month is not null and Year is not null,
+					CONCAT(format(Year, '0000'), '-', format(month, '00')),
+					NULL
+				) as YearMonth,
+				lower(replace(
+						replace(
+								cast(m.Name as varchar(max)) collate SQL_Latin1_General_Cp1251_CS_AS,
+								' ', '-'),
+						'&', '-')) as MagazineSlug
+			from Sources.Source s
+					join Sources.Magazine m on m.Id = s.MagIssueMagazine
+					CROSS APPLY STRING_SPLIT(s.Languages, ';')
+			where s.SourceType = 'magissue'""" ];
+	
+	rr:subjectMap [
+		rr:template "magazine/{MagazineSlug}/issue/{Id}";
+		rr:graphMap [
+		  rr:template "magazine/{MagazineSlug}/issue/{Id}#generated"
+		]
+	];
+	
+	rr:predicateObjectMap [
 		rr:predicate dcterms:created;
 		rr:objectMap [
 			rr:column "DateCreated"
@@ -204,13 +266,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 		rr:predicate dcterms:modified;
 		rr:objectMap [
 			rr:column "DateUpdated"
-		]
-	];
-	
-	rr:predicateObjectMap [
-		rr:predicate schema:image;
-		rr:objectMap [
-			rr:template "magazine/{MagazineSlug}/issue/{LegacyImage}/image"
 		]
 	].
 	

@@ -1,5 +1,6 @@
 PREFIX rr: <http://www.w3.org/ns/r2rml#>
 PREFIX acl: <http://www.w3.org/ns/auth/acl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX schema: <http://schema.org/>
 PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
 PREFIX wbo: <https://schema.wikibus.org/>
@@ -16,9 +17,15 @@ PREFIX wbo: <https://schema.wikibus.org/>
 	
 	rr:subjectMap [
 		rr:template "wishlist/{User}/{SourceId}";
-		rr:class wbo:WishlistItem;
 		rr:graphMap [
 		  rr:template "wishlist/{User}/{SourceId}"
+		]
+	];
+	
+	rr:predicateObjectMap [
+		rr:predicate rdf:type;
+		rr:objectMap [
+			rr:template "api/WishlistItem"
 		]
 	];
 	
