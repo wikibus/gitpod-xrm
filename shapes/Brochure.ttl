@@ -31,6 +31,7 @@
             sh:datatype xsd:string ;
             sh:minLength 1 ;
             sh:maxCount 1 ;
+            sh:pattern "^[^\\s]" ;
         ],
         [
             sh:path dcterms:description ;

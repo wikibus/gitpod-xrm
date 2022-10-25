@@ -203,6 +203,8 @@ where SourceType = 'book'"
 			ExternalId
 			OrderIndex
 			SourceType
+			OriginalUrl
+			ThumbnailUrl
 	}
 
 	logical-source users {

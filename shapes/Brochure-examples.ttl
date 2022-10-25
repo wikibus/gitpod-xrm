@@ -75,6 +75,21 @@
         [
             sh:path schema:image ;
             sh:hasValue <https://wikibus.lndo.site/image/brochure-wikibus%20library%2Fbrochures%2Fifatzmg81pwm1dbnmj3l> ;
+            sh:node 
+            [
+                sh:property
+                [
+                    sh:path schema:contentUrl ;
+                    sh:hasValue <https://res.cloudinary.com/dytcmwide/image/upload/t_default_downsize/v1632163731/wikibus%20library/brochures/ifatzmg81pwm1dbnmj3l.jpg> ;
+                ] , [
+                    sh:path schema:thumbnail ;
+                    sh:node 
+                    [
+                        sh:path schema:contentUrl ;
+                        sh:hasValue <https://res.cloudinary.com/dytcmwide/image/upload/t_media_lib_thumb/v1632163731/wikibus%20library/brochures/ifatzmg81pwm1dbnmj3l.jpg> ;
+                    ] ;
+                ] ;
+            ]
         ]
 .
 

@@ -1,7 +1,5 @@
 output r2rml
 
-template cloudinaryUrl "https://res.cloudinary.com/dytcmwide/image/upload/t_default_downsize/v1599422851/{0}.jpg"
-template cloudinaryThumbUrl "https://res.cloudinary.com/dytcmwide/image/upload/t_media_lib_thumb/v1599422851/{0}.jpg"
 template magazineIssueImageId "magazine/{0}/issue/{1}/image"
 
 map Image from wikibus.images {
@@ -15,7 +13,7 @@ map Image from wikibus.images {
 
     properties
         schema.identifier from ExternalId;
-        schema.contentUrl template cloudinaryUrl with ExternalId;
+        schema.contentUrl from OriginalUrl as IRI;
         schema.thumbnail template "cloudinary-image-{0}" with Id as BlankNode;
         dtype.orderIndex from OrderIndex with datatype xsd.int;
 }
@@ -27,7 +25,7 @@ map ImageThumbnail from wikibus.images {
 		template imageId with SourceType ExternalId;
 
     properties
-        schema.contentUrl template cloudinaryThumbUrl with ExternalId;
+        schema.contentUrl from ThumbnailUrl as IRI;
 }
 
 map LegacyImage from wikibus.legacy_images {
