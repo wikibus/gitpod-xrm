@@ -226,7 +226,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	rr:logicalTable [ rr:sqlQuery """select
 				Id,
 				ContentSize as ByteSize,
-				concat(cast(round(cast(ContentSize as decimal) / 1024 /1024, 2) as decimal(4,2)), ' MB') as ContentSize,
+				concat(cast(round(cast(ContentSize as decimal) / 1024 /1024, 2) as decimal(5,2)), ' MB') as ContentSize,
 				dbo.UrlDecode(right(ContentUrl, charindex('/', reverse(ContentUrl) + '/') - 1)) as ContentName
 			from Sources.Source
 			where SourceType = 'folder' and ContentUrl IS NOT NULL""" ];
