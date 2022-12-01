@@ -8,7 +8,7 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
 
 <shape/magazine>
     a sh:NodeShape ;
-    sh:targetClass <https://wikibus.org/api/Periodical> ;
+    sh:targetClass <https://wikibus.lndo.site/api/Periodical> ;
     sh:property
         [
             sh:path dcterms:title ;
@@ -24,7 +24,7 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
         [
             sh:path wbo:issues ;
             sh:nodeKind sh:IRI ;
-            sh:class <https://wikibus.org/api/IssueCollection> ;
+            sh:class <https://wikibus.lndo.site/api/IssueCollection> ;
             sh:minCount 1 ;
             sh:maxCount 1 ;
             sh:node
@@ -82,7 +82,7 @@ PREFIX hydra: <http://www.w3.org/ns/hydra/core#>
         [
             sh:path schema:containedInPlace ;
             sh:maxCount 1 ;
-            sh:class <https://wikibus.org/api/StorageLocation> ;
+            sh:class <https://wikibus.lndo.site/api/StorageLocation> ;
         ],
         [
             sh:path dcterms:created ;
